@@ -1,0 +1,48 @@
+name: shift_lift
+description: A new Flutter project.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=2.19.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # firesbase
+  cloud_firestore: ^4.4.3
+  firebase_app_check: ^0.1.1+12
+  firebase_auth: ^4.2.9
+  firebase_core: ^2.7.0
+  firebase_storage: ^11.0.14
+
+  flutter_riverpod: ^2.2.0
+  font_awesome_flutter: ^10.4.0
+  fpdart: ^0.4.0
+  google_fonts: ^4.0.3
+  pinput: ^2.2.31
+  routemaster: ^1.0.1
+  shared_preferences: ^2.0.18
+  flutter_svg: ^2.0.4
+  http: ^0.13.5
+  top_modal_sheet: ^2.0.1
+  carousel_slider: ^4.2.1
+
+  # for google maps and places
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  flutter_google_places: ^0.3.0
+  google_maps_webservice: ^0.0.20-nullsafety.5
+  google_maps_flutter: ^2.2.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "144980366128",
+    "project_id": "shift-lift-31fd9",
+    "storage_bucket": "shift-lift-31fd9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144980366128:android:54ff5df45b39e895bdeef5",
+        "android_client_info": {
+          "package_name": "com.example.shift_lift"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144980366128-pav3mvuhno3r0q7r99h8psenc117848h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDInVJxb-ClwdcaYr4I7omzGJaEAgWXKnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144980366128-pav3mvuhno3r0q7r99h8psenc117848h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "144980366128-b7n7ruht5kan65pr2amhqehjk9of9j6i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shiftLift"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
