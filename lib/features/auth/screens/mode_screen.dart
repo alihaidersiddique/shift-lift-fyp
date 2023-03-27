@@ -44,7 +44,7 @@ class ModeScreen extends ConsumerWidget {
               ),
               child: Center(
                 child: Text(
-                  Constants.shiftLift,
+                  AppText.shiftLift,
                   style: GoogleFonts.aladin(
                     color: Colors.white,
                     fontSize: 70,
@@ -62,7 +62,7 @@ class ModeScreen extends ConsumerWidget {
               vertical: 5.0,
             ),
             child: Text(
-              Constants.selectMode,
+              AppText.selectMode,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 15.0,
@@ -74,7 +74,7 @@ class ModeScreen extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              Constants.userName,
+              AppText.userName,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 25.0,
@@ -86,14 +86,14 @@ class ModeScreen extends ConsumerWidget {
 
           // cutomer button
           ModeButtonWidget(
-            name: Constants.customer,
+            name: AppText.customer,
             onPress: () => addMode(ref, "customer", context),
           ),
 
           // driver button
           const SizedBox(height: 20.0),
           ModeButtonWidget(
-            name: Constants.driver,
+            name: AppText.driver,
             onPress: () => addMode(ref, "driver", context),
           ),
 

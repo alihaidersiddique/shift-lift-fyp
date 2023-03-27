@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 final markersProvider = StateProvider<Set<Marker>>((ref) {
   return <Marker>{};
 });
-
-// final googleMapControllerProvider = StateProvider<GoogleMapController>((ref) {
-//   return GoogleMapController();
-// });
 
 final sourceLatLongProvider = StateProvider<LatLng>((ref) {
   return const LatLng(0.0, 0.0);

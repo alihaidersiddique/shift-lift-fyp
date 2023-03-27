@@ -35,7 +35,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
               ),
               child: Center(
                 child: Text(
-                  Constants.shiftLift,
+                  AppText.shiftLift,
                   style: GoogleFonts.aladin(
                     color: Colors.white,
                     fontSize: 70,
@@ -53,7 +53,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
               vertical: 5.0,
             ),
             child: Text(
-              Constants.whoAreYou,
+              AppText.whoAreYou,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 15.0,
@@ -65,7 +65,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              Constants.tellYourGoodName,
+              AppText.tellYourGoodName,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 25.0,
@@ -149,7 +149,7 @@ class NameTextField extends StatelessWidget {
         decoration: InputDecoration(
           focusedErrorBorder: InputBorder.none,
           border: InputBorder.none,
-          hintText: Constants.fullName,
+          hintText: AppText.fullName,
           hintStyle: GoogleFonts.poppins(color: Colors.black),
         ),
       ),

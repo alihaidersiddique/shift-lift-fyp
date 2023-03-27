@@ -1,4 +1,4 @@
-class Constants {
+class AppText {
   static const defaultPic =
       'https://external-preview.redd.it/5kh5OreeLd85QsqYO1Xz_4XSLYwZntfjqou-8fyBFoE.png?auto=webp&s=dbdabd04c399ce9c761ff899f5d38656d1de87c2';
 
@@ -26,4 +26,18 @@ class Constants {
   static const String countryCode = "+92";
   static const String customer = "Customer";
   static const String driver = "Driver";
+
+  //
+  static const basicInfo = "Basic Information";
+  static const addImage = "Add Photo";
+  static const changeImage = 'Change Image';
+  static const fName = "First Name";
+  static const lName = "Last Name";
+  static const next = "Next";
+  static const idconfi = "ID Confirmation";
+  static const selectvehi = "Select Vehicle";
+  static const driverlisce = "Driver License";
+  static const drivercnic = "Driver CNIC";
+  static const vehiclepic = "Vehicle Register";
+  static const vehicleregis = "Vehicle Registration";
 }

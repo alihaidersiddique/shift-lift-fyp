@@ -50,7 +50,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   late Uint8List markIcons;
 
   loadCustomMarker() async {
-    markIcons = await loadAsset('assets/dest_marker.png', 100);
+    markIcons = await loadAsset('assets/images/dest_marker.png', 100);
   }
 
   Future<Uint8List> loadAsset(String path, int width) async {
@@ -175,7 +175,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 DrawerItemButton(
                   icon: Icons.change_circle,
                   label: "Driver",
-                  onPressed: () {},
+                  onPressed: () => Routemaster.of(context)
+                      .push('/driver-regsitration-screen'),
                 ),
               ],
             ),
@@ -230,7 +231,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       language: "en",
       context: context,
       mode: Mode.overlay,
-      apiKey: Constants.kGooglePlacesApiKey,
+      apiKey: AppText.kGooglePlacesApiKey,
       components: [Component(Component.country, "pk")],
       types: [],
       hint: "Search City",
@@ -415,7 +416,7 @@ class _LocationFieldWidgetState extends State<LocationFieldWidget> {
       "maps/api/place/autocomplete/json",
       {
         "input": query, // query parameter
-        "key": Constants.kGooglePlacesApiKey,
+        "key": AppText.kGooglePlacesApiKey,
       },
     );
 
@@ -431,7 +432,7 @@ class _LocationFieldWidgetState extends State<LocationFieldWidget> {
           placePredictions = result.predictions!;
         });
       }
-      print(response);
+      debugPrint(response);
     }
   }
 

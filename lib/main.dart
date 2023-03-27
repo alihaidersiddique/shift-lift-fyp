@@ -5,12 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shift_lift/commons/loader.dart';
 import 'package:shift_lift/features/auth/controller/auth_controller.dart';
-import 'package:shift_lift/features/auth/screens/sign_in_screen.dart';
 import 'commons/error_text.dart';
 import 'core/models/user_model.dart';
 import 'firebase_options.dart';
 import 'router.dart';
-import 'utils/app_colors.dart';
 import 'utils/app_pallette.dart';
 
 Future<void> main() async {
@@ -56,7 +54,7 @@ class _MyAppState extends ConsumerState<MyApp> {
                 appBarTheme: const AppBarTheme(color: Colors.white),
                 iconButtonTheme: const IconButtonThemeData(
                   style: ButtonStyle(
-                    iconColor: MaterialStatePropertyAll(Colors.white),
+                    iconColor: MaterialStatePropertyAll(Colors.black),
                   ),
                 ),
                 useMaterial3: true,

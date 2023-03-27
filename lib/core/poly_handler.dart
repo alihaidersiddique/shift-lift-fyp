@@ -24,7 +24,7 @@ getPolylines(LatLng pickUp, LatLng drop) async {
 
   try {
     var response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/directions/json?origin=$pickLat%2C$pickLng&destination=$dropLat%2C$dropLng&avoid=ferries|indoor&transit_mode=bus&mode=driving&key=${Constants.kGoogleMapsApiKey}'));
+        'https://maps.googleapis.com/maps/api/directions/json?origin=$pickLat%2C$pickLng&destination=$dropLat%2C$dropLng&avoid=ferries|indoor&transit_mode=bus&mode=driving&key=${AppText.kGoogleMapsApiKey}'));
     if (response.statusCode == 200) {
       var steps =
           jsonDecode(response.body)['routes'][0]['overview_polyline']['points'];

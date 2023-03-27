@@ -39,7 +39,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
               ),
               child: Center(
                 child: Text(
-                  Constants.shiftLift,
+                  AppText.shiftLift,
                   style: GoogleFonts.aladin(
                     color: Colors.white,
                     fontSize: 70,
@@ -57,7 +57,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
               vertical: 5.0,
             ),
             child: Text(
-              Constants.phoneVerification,
+              AppText.phoneVerification,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 15.0,
@@ -69,7 +69,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              Constants.enterOtp,
+              AppText.enterOtp,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 25.0,
@@ -111,10 +111,10 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
                 style: GoogleFonts.poppins(color: Colors.black, fontSize: 14),
                 children: [
                   const TextSpan(
-                    text: Constants.resendCode,
+                    text: AppText.resendCode,
                   ),
                   TextSpan(
-                    text: " 10 ${Constants.seconds}",
+                    text: " 10 ${AppText.seconds}",
                     style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                   ),
                 ],

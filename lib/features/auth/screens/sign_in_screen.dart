@@ -26,7 +26,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     } else {
       ref.read(authControllerProvider.notifier).signInWithPhone(
             context,
-            Constants.countryCode + phoneController.text,
+            AppText.countryCode + phoneController.text,
           );
       Routemaster.of(context).push('/otp-screen');
     }
@@ -49,7 +49,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               ),
               child: Center(
                 child: Text(
-                  Constants.shiftLift,
+                  AppText.shiftLift,
                   style: GoogleFonts.aladin(
                     color: Colors.white,
                     fontSize: 70,
@@ -65,7 +65,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               vertical: 5.0,
             ),
             child: Text(
-              Constants.helloNiceToMeetYou,
+              AppText.helloNiceToMeetYou,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 15.0,
@@ -75,7 +75,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              Constants.getShiftingWithShiftLift,
+              AppText.getShiftingWithShiftLift,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 25.0,
@@ -102,7 +102,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             ),
             child: Row(
               children: [
-                const Text(Constants.countryCode),
+                const Text(AppText.countryCode),
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: TextFormField(
@@ -114,7 +114,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     decoration: InputDecoration(
                       focusedErrorBorder: InputBorder.none,
                       border: InputBorder.none,
-                      hintText: Constants.enterMobileNumber,
+                      hintText: AppText.enterMobileNumber,
                       hintStyle: GoogleFonts.poppins(color: Colors.black),
                     ),
                   ),
@@ -135,17 +135,17 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 style: GoogleFonts.poppins(color: Colors.black, fontSize: 12),
                 children: [
                   const TextSpan(
-                    text: "${Constants.byCreating} ",
+                    text: "${AppText.byCreating} ",
                   ),
                   TextSpan(
-                    text: "${Constants.termsOfService} ",
+                    text: "${AppText.termsOfService} ",
                     style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                   ),
                   const TextSpan(
                     text: "and ",
                   ),
                   TextSpan(
-                    text: "${Constants.privacyPolicy} ",
+                    text: "${AppText.privacyPolicy} ",
                     style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                   ),
                 ],
