@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../core/providers/driver_request_providers.dart';
-import '../../utils/utils.dart';
+import '../../map/controller/map_controller.dart';
+import '../../../utils/utils.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -36,6 +36,12 @@ class _DriveRequestScreenState extends ConsumerState<DriveRequestScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -61,7 +67,6 @@ class _DriveRequestScreenState extends ConsumerState<DriveRequestScreen> {
               ),
             ),
           ),
-
           //
         ],
       ),
@@ -100,10 +105,10 @@ class _DriveRequestScreenState extends ConsumerState<DriveRequestScreen> {
                 onMapCreated: (GoogleMapController controller) {
                   _controllerCompleter.complete(controller);
                   _controller = controller;
-                  controller.setMapStyle(_mapStyle);
+                  _controller.setMapStyle(_mapStyle);
                 },
                 initialCameraPosition: CameraPosition(
-                  target: ref.read(destinationLatLongProvider),
+                  target: ref.read(dropoffLocationProvider),
                   zoom: 17,
                 ),
                 zoomControlsEnabled: false,
@@ -122,7 +127,7 @@ class _DriveRequestScreenState extends ConsumerState<DriveRequestScreen> {
     return SizedBox(
       height: 115,
       child: ColoredBox(
-        color: AppColors.primaryColor,
+        color: Colors.white,
         child: Padding(
           padding: EdgeInsets.only(
             left: AppDimensions.height30,
@@ -135,12 +140,15 @@ class _DriveRequestScreenState extends ConsumerState<DriveRequestScreen> {
                   contentPadding: EdgeInsets.zero,
                   leading: const FaIcon(
                     FontAwesomeIcons.locationDot,
-                    color: Colors.white,
+                    color: Colors.black,
                     size: 20,
                   ),
                   title: Text(
                     ref.read(sourceLocationProvider).toString(),
-                    style: smClHd.copyWith(color: Colors.white, fontSize: 20),
+                    style: smClHd.copyWith(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -149,12 +157,15 @@ class _DriveRequestScreenState extends ConsumerState<DriveRequestScreen> {
                   contentPadding: EdgeInsets.zero,
                   leading: const FaIcon(
                     FontAwesomeIcons.locationArrow,
-                    color: Colors.white,
+                    color: Colors.black,
                     size: 20,
                   ),
                   title: Text(
                     ref.read(destinationLocationProvider).toString(),
-                    style: smClHd.copyWith(color: Colors.white, fontSize: 20),
+                    style: smClHd.copyWith(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -278,7 +289,7 @@ class RideButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () => onTap(),
       style: ButtonStyle(
         backgroundColor: MaterialStatePropertyAll(bgColor),
       ),

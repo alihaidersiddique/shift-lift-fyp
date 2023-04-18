@@ -9,7 +9,7 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/utils.dart';
 import '../../../../core/utils/app_image_picker.dart';
 import '../../../../utils/commons/app_button.dart';
-import 'client_request_screen.dart';
+import '../../home/screens/driver_home_screen.dart';
 
 class VehiclePictureScreen extends ConsumerStatefulWidget {
   const VehiclePictureScreen({super.key});
@@ -34,7 +34,7 @@ class _VehiclePictureScreenState extends ConsumerState<VehiclePictureScreen> {
     } else {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => ClientRequestScreeen(),
+          builder: (context) => DriverHomeScreen(),
         ),
       );
     }

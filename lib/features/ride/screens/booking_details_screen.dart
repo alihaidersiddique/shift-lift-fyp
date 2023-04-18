@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shift_lift/features/chat/chat_screen.dart';
-import 'package:shift_lift/features/request_trip/drive_request_screen.dart';
-import '../../utils/utils.dart';
+import '../../../core/utils.dart';
+import '../../../utils/utils.dart';
+import '../../screens.dart';
 
 class BookingDetailsScreen extends StatelessWidget {
   const BookingDetailsScreen({super.key});
@@ -13,14 +13,7 @@ class BookingDetailsScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DriveRequestScreen(),
-                ),
-              );
-            },
+            onPressed: () => navigateTo(context, '/drive-request-screen'),
             child: Text(
               "Cancel",
               style: smClHd.copyWith(color: Colors.white, fontSize: 18),

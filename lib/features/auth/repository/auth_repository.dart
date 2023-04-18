@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:shift_lift/core/providers/firebase_providers.dart';
 
 import '../../../core/constants/firebase_constants.dart';
+import '../../../core/failure.dart';
 import '../../../core/models/user_model.dart';
-import 'package:routemaster/routemaster.dart';
+import '../../../core/type_defs.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
@@ -50,6 +52,10 @@ class AuthRepository {
       phoneNumber: user.phoneNumber!,
       displayName: user.displayName,
       photoUrl: user.photoURL,
+      address: "",
+      email: "",
+      dateOfBirth: "",
+      gender: "",
     );
 
     await _users.doc(user.phoneNumber).set(userModel.toMap());
@@ -57,39 +63,61 @@ class AuthRepository {
     debugPrint("user data saved...");
   }
 
-  void createUserIfNotExists(User user, BuildContext context) async {
-    final exists = await doesUserExist(user.phoneNumber);
-
-    if (exists) {
-      Routemaster.of(context).push('/home-screen');
-    } else {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.phoneNumber)
-          .set({
-        'uid': user.uid,
-        'displayName': user.displayName,
-        'photoUrl': user.photoURL,
-        'phoneNumber': user.phoneNumber,
-      });
-
-      Routemaster.of(context).push('/name-screen');
-    }
+  Future<UserModel> getUserData(String phoneNumber) async {
+    final userDocument = await _users.doc(phoneNumber).get();
+    final userData = userDocument.data() as Map<String, dynamic>;
+    final userModel = UserModel.fromMap(userData);
+    return userModel;
   }
 
-  Future<bool> doesUserExist(String? phoneNumber) async {
+  FutureVoid updateProfileImage(String? phoneNumber, String photoUrl) async {
     try {
-      final userDoc = await _users.doc(phoneNumber).get();
-      return userDoc.exists;
+      return right(
+          await _users.doc(phoneNumber).update({'photoUrl': photoUrl}));
+    } on FirebaseException catch (e) {
+      throw e.message!;
     } catch (e) {
-      // Log the error and re-throw it to propagate it to the calling method
-      debugPrint('Error checking if user exists: $e');
-      rethrow;
+      return left(Failure(e.toString()));
     }
   }
 
-  Stream<UserModel> getUserData(String phoneNumber) {
-    return _users.doc(phoneNumber).snapshots().map(
-        (event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
+  FutureVoid updateDisplayName(String? phoneNumber, String name) async {
+    try {
+      return right(await _users.doc(phoneNumber).update({'displayName': name}));
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid updateAddress(String? phoneNumber, String address) async {
+    try {
+      return right(await _users.doc(phoneNumber).update({'address': address}));
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid updateDateOfBirth(String? phoneNumber, String dob) async {
+    try {
+      return right(await _users.doc(phoneNumber).update({'dateOfBirth': dob}));
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid updateGender(String? phoneNumber, String gender) async {
+    try {
+      return right(await _users.doc(phoneNumber).update({'gender': gender}));
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
   }
 }

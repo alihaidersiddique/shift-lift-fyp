@@ -254,6 +254,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.9"
+  flutter_polyline_points:
+    dependency: "direct main"
+    description:
+      name: flutter_polyline_points
+      sha256: "02699e69142f51a248d784b6e3eec524194467fca5f7c4da19699ce2368b6980"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter_riverpod:
     dependency: "direct main"
     description:
@@ -292,10 +300,10 @@ packages:
     dependency: "direct main"
     description:
       name: fpdart
-      sha256: "19db038cf3bb49bfe28b2a0b363ce84cf2e6a0f471a93ae09271cfef03dae935"
+      sha256: "40dfb6f837ed1a24bc379083b564c196e6d771d713c9641cc30402a1fb989926"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0"
+    version: "0.5.0"
   geocoding:
     dependency: "direct main"
     description:
@@ -376,6 +384,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.1"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      sha256: "50bc08b72ede07daaf897deb4c00ca8fd8976c8821a4c84d7aeef0e92d1c5620"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.5.6"
   google_api_headers:
     dependency: transitive
     description:
@@ -520,6 +536,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      sha256: "04094f2eb032cbb06c6f6e8d3607edcfcb0455e2bb6cbc010cb01171dcb64e6d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   matcher:
     dependency: transitive
     description:
@@ -672,14 +696,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  routemaster:
-    dependency: "direct main"
-    description:
-      name: routemaster
-      sha256: b3b10b6ee31c741b453091e6b33323cc96631b19e4a14fc6069e9de056c7311c
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   rxdart:
     dependency: transitive
     description:

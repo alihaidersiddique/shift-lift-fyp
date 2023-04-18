@@ -2,13 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:routemaster/routemaster.dart';
-import 'package:shift_lift/commons/loader.dart';
 import 'package:shift_lift/features/auth/controller/auth_controller.dart';
-import 'commons/error_text.dart';
 import 'core/models/user_model.dart';
+import 'core/utils/app_routes.dart';
 import 'firebase_options.dart';
-import 'router.dart';
 import 'utils/app_pallette.dart';
 
 Future<void> main() async {
@@ -19,57 +16,54 @@ Future<void> main() async {
 }
 
 class MyApp extends ConsumerStatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  ConsumerState<MyApp> createState() => _MyAppState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  UserModel? userModel;
-
-  Future<void> getData(WidgetRef ref, User data) async {
-    userModel = await ref
-        .read(authControllerProvider.notifier)
-        .getUserData(data.phoneNumber!)
-        .first;
-    ref.read(userProvider.notifier).update((state) => userModel);
-    setState(() {});
+  @override
+  void initState() {
+    getData(ref);
+    super.initState();
   }
+
+  // UserModel? userModel;
+
+  Future<void> getData(WidgetRef ref) async {
+    ref.read(authControllerProvider.notifier).authStateChange.listen((event) {
+      if (event != null) {
+        ref
+            .read(authControllerProvider.notifier)
+            .getUserData(event.phoneNumber!);
+        // updateUserProvider(event);
+      }
+    });
+  }
+
+  // void updateUserProvider(User event) async {
+  //   userModel = await ref
+  //       .read(authControllerProvider.notifier)
+  //       .getUserData(event.phoneNumber!);
+  //   ref.read(userProvider.notifier).update((state) => userModel);
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(authStateChangeProvider).when(
-          data: (data) {
-            if (data != null) {
-              if (userModel == null) {
-                getData(ref, data);
-              }
-            }
-            return MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                scaffoldBackgroundColor: Colors.white,
-                primaryColor: Palette.primaryColor,
-                appBarTheme: const AppBarTheme(color: Colors.white),
-                iconButtonTheme: const IconButtonThemeData(
-                  style: ButtonStyle(
-                    iconColor: MaterialStatePropertyAll(Colors.black),
-                  ),
-                ),
-                useMaterial3: true,
-              ),
-              routeInformationParser: const RoutemasterParser(),
-              routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
-                if (userModel != null) {
-                  return loggedInRoute;
-                }
-                return loggedOutRoute;
-              }),
-            );
-          },
-          error: (error, stackTrace) => ErrorText(error: error.toString()),
-          loading: () => const Loader(),
-        );
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: Palette.primaryColor,
+        appBarTheme: const AppBarTheme(color: Colors.white),
+        iconButtonTheme: const IconButtonThemeData(
+          style: ButtonStyle(iconColor: MaterialStatePropertyAll(Colors.black)),
+        ),
+        useMaterial3: true,
+      ),
+      routerConfig: appRoutes,
+    );
   }
 }

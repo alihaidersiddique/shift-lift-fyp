@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
-import 'package:routemaster/routemaster.dart';
 import 'package:shift_lift/core/providers/firebase_providers.dart';
 import 'package:shift_lift/features/auth/repository/auth_repository.dart';
 import 'package:shift_lift/utils/app_colors.dart';
@@ -54,9 +53,9 @@ class _PinputWidgetState extends ConsumerState<PinputWidget> {
 
         debugPrint("data saved method called");
 
-        Routemaster.of(context).push('/name-screen');
+        navigateTo(context, '/name-screen');
       } else {
-        Routemaster.of(context).push('/home-screen');
+        navigateTo(context, '/home-screen');
       }
 
       debugPrint("otp is correct !");

@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shift_lift/core/constants/constants.dart';
-import 'package:shift_lift/features/auth/controller/auth_controller.dart';
 import '../../../utils/app_colors.dart';
 import 'widgets/pinput_widget.dart';
 

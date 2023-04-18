@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shift_lift/utils/app_text_styles.dart';
 
 class DrawerItemButton extends StatelessWidget {
   final IconData icon;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:routemaster/routemaster.dart';
 import 'package:shift_lift/core/constants/constants.dart';
 import 'package:shift_lift/core/utils.dart';
 import 'package:shift_lift/features/auth/controller/auth_controller.dart';
@@ -28,7 +27,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             context,
             AppText.countryCode + phoneController.text,
           );
-      Routemaster.of(context).push('/otp-screen');
+
+      navigateTo(context, '/otp-screen');
     }
   }
 

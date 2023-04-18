@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:routemaster/routemaster.dart';
 import 'package:shift_lift/core/constants/constants.dart';
 import '../../../core/providers/firebase_providers.dart';
 import '../../../core/utils.dart';
@@ -112,8 +111,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
       docRef.update({
         'displayName': nameController.text,
       });
-
-      Routemaster.of(context).push('/mode-screen');
+      navigateTo(context, '/mode-screen');
     }
   }
 }
