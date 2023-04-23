@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shift_lift/features/driver/home/components/driver_drawer.dart';
 
 import '../../../../utils/app_colors.dart';
@@ -23,12 +24,6 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       backgroundColor: const Color(0xffFBFBFB),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        // leading: const Padding(
-        //   padding: EdgeInsets.only(right: 20.0),
-        //   child: CircleAvatar(
-        //     backgroundImage: AssetImage("assets/images/profile.jpg"),
-        //   ),
-        // ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15.0),
@@ -63,8 +58,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         itemCount: rides.length,
                         itemBuilder: (context, index) {
                           final ride = rides[index];
-                          debugPrint("here is ride");
-                          debugPrint(ride.customerName);
+
+                          final pickUpLatLng =
+                              LatLng(ride.pickUpLat!, ride.pickUpLong!);
+
+                          final dropOffLatLng =
+                              LatLng(ride.dropOffLat!, ride.dropOffLong!);
+
                           return CustomerRequestWidget(
                             amount: 0.00,
                             clientName: ride.customerName,
@@ -74,13 +74,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                             profileImage: ride.customerPhoto,
                             mapImage: "",
                             time: ride.duration,
+                            pickUpLatLng: pickUpLatLng,
+                            dropOffLatLng: dropOffLatLng,
                             onDecline: () => setState(() {
                               rides.removeAt(index);
                             }),
                             onAccept: () {
                               rideController.bookRide(
                                 rideId: ride.rideId,
-                                driverId: user.uid ?? "",
+                                driverId: user.phoneNumber ?? "",
                               );
                               setState(() {
                                 rides.removeAt(index);

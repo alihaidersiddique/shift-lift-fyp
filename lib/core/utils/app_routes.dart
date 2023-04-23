@@ -8,7 +8,7 @@ import '../../features/auth/screens/screens.dart';
 import '../../features/driver/home/screens/driver_home_screen.dart';
 import '../../features/driver/registration/screens/basic_info_screen.dart';
 import '../../features/home/home_screen.dart';
-import '../../features/ride/screens/drive_request_screen.dart';
+import '../../features/ride/screens/available_drivers_screen.dart';
 
 final GoRouter appRoutes = GoRouter(
   routes: [

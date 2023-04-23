@@ -1,15 +1,19 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import '../controller/map_controller.dart';
-
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:shift_lift/core/constants/constants.dart';
+import 'package:shift_lift/utils/app_colors.dart';
 
 class RideRequestMapScreen extends ConsumerStatefulWidget {
-  const RideRequestMapScreen({super.key});
+  const RideRequestMapScreen({
+    required this.source,
+    required this.destination,
+    super.key,
+  });
+
+  final LatLng source;
+  final LatLng destination;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -17,55 +21,64 @@ class RideRequestMapScreen extends ConsumerStatefulWidget {
 }
 
 class _RideRequestMapScreenState extends ConsumerState<RideRequestMapScreen> {
-  // late GoogleMapController _controller;
-  // final Completer<GoogleMapController> _controllerCompleter = Completer();
+  List<LatLng> polylineCoordinates = [];
 
-  // String? _mapStyle;
+  void getPolyPoints() async {
+    PolylinePoints polylinePoints = PolylinePoints();
 
-  // @override
-  // void initState() {
-  //   super.initState();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      AppText.kGoogleMapsApiKey,
+      PointLatLng(widget.source.latitude, widget.source.longitude),
+      PointLatLng(widget.destination.latitude, widget.destination.longitude),
+    );
 
-  //   rootBundle.loadString('assets/map_style.txt').then((string) {
-  //     _mapStyle = string;
-  //   });
-  // }
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+      setState(() {});
+    }
+  }
 
-  late GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  @override
+  void initState() {
+    getPolyPoints();
+    // source = ref.read(pickupLocationProvider);
+    // destination = ref.read(dropoffLocationProvider);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Consumer(builder: (context, ref, _) {
-        return GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 11.0,
-          ),
-        );
-
-        // GoogleMap(
-        //   onMapCreated: (GoogleMapController controller) {
-        //     _controllerCompleter.complete(controller);
-        //     _controller = controller;
-        //     _controller.setMapStyle(_mapStyle);
-        //   },
-        //   initialCameraPosition: CameraPosition(
-        //     target: ref.read(dropoffLocationProvider),
-        //     zoom: 17,
-        //   ),
-        //   zoomControlsEnabled: false,
-        //   markers: ref.read(markersProvider),
-        //   polylines: <Polyline>{ref.read(mapPolylineProvider)},
-        // );
-      }),
+      child: Consumer(
+        builder: (context, ref, _) {
+          return GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: widget.source,
+              zoom: 17,
+            ),
+            polylines: {
+              Polyline(
+                polylineId: const PolylineId("route"),
+                color: AppColors.primaryColor,
+                width: 5,
+                points: polylineCoordinates,
+              ),
+            },
+            markers: {
+              Marker(
+                markerId: const MarkerId("source"),
+                position: widget.source,
+              ),
+              Marker(
+                markerId: const MarkerId("destination"),
+                position: widget.destination,
+              ),
+            },
+          );
+        },
+      ),
     );
   }
 }

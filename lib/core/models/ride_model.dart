@@ -83,10 +83,10 @@ class RideModel {
         orElse: () => RideStatus.error,
       ),
       errorMessage: json['errorMessage'] ?? "",
-      pickUpLat: json['pickUpLat'] ?? "",
-      pickUpLong: json['pickUpLong'] ?? "",
-      dropOffLat: json['dropOffLat'] ?? "",
-      dropOffLong: json['dropOffLong'] ?? "",
+      pickUpLat: json['pickUpLat'] ?? 0.00,
+      pickUpLong: json['pickUpLong'] ?? 0.00,
+      dropOffLat: json['dropOffLat'] ?? 0.00,
+      dropOffLong: json['dropOffLong'] ?? 0.00,
     );
   }
 

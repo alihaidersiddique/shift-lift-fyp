@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../utils/app_colors.dart';
 import '../../../map/screens/ride_request_map_screen.dart';
-import '../../../ride/screens/drive_request_screen.dart';
+import '../../../ride/screens/available_drivers_screen.dart';
 
-class CustomerRequestWidget extends StatelessWidget {
+class CustomerRequestWidget extends ConsumerWidget {
   const CustomerRequestWidget({
     Key? key,
     required this.time,
@@ -18,6 +20,8 @@ class CustomerRequestWidget extends StatelessWidget {
     required this.dropOff,
     required this.onAccept,
     required this.onDecline,
+    required this.pickUpLatLng,
+    required this.dropOffLatLng,
   }) : super(key: key);
 
   final String time;
@@ -30,9 +34,11 @@ class CustomerRequestWidget extends StatelessWidget {
   final String dropOff;
   final VoidCallback onAccept;
   final VoidCallback onDecline;
+  final LatLng pickUpLatLng;
+  final LatLng dropOffLatLng;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.symmetric(
@@ -85,7 +91,11 @@ class CustomerRequestWidget extends StatelessWidget {
               ),
               // map box
               GestureDetector(
-                onTap: () => _showMap(context),
+                onTap: () => _showMap(
+                  context,
+                  pickUpLatLng,
+                  dropOffLatLng,
+                ),
                 child: Container(
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
@@ -126,7 +136,7 @@ class CustomerRequestWidget extends StatelessWidget {
     );
   }
 
-  void _showMap(context) {
+  void _showMap(context, source, destination) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -142,11 +152,14 @@ class CustomerRequestWidget extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.close_outlined, color: Colors.white),
+                    icon: const Icon(Icons.close_outlined, color: Colors.white),
                   ),
                 ),
               ),
-              RideRequestMapScreen(),
+              RideRequestMapScreen(
+                source: source,
+                destination: destination,
+              ),
             ],
           ),
         );

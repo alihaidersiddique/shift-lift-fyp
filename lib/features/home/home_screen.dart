@@ -17,6 +17,7 @@ import 'package:shift_lift/features/home/components/vehicle_tile_widget.dart';
 
 import '../../utils/utils.dart';
 import '../auth/controller/auth_controller.dart';
+import '../driver/home/controller/home_controller.dart';
 import '../map/controller/map_controller.dart';
 import '../ride/controllers/ride_controller.dart';
 import 'components/rider_drawer.dart';
@@ -48,19 +49,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Future<QuerySnapshot> fetchAppVehicles() async =>
       await FirebaseFirestore.instance.collection('appVehicles').get();
 
-  loadCustomMarker() async {
-    markIcons = await loadAsset('assets/images/dest_marker.png', 100);
-  }
+  // loadCustomMarker() async {
+  //   markIcons = await loadAsset('assets/images/dest_marker.png', 100);
+  // }
 
-  Future<Uint8List> loadAsset(String path, int width) async {
-    ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetHeight: width);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
-  }
+  // Future<Uint8List> loadAsset(String path, int width) async {
+  //   ByteData data = await rootBundle.load(path);
+  //   ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+  //       targetHeight: width);
+  //   ui.FrameInfo fi = await codec.getNextFrame();
+  //   return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+  //       .buffer
+  //       .asUint8List();
+  // }
 
   void validateFields() async {
     if (_pickUpController.text.isEmpty) {
@@ -90,6 +91,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             customerPhoto: user.photoUrl,
             distance: map.distance?.round().toString(),
             duration: map.time?.round().toString(),
+            vehicleType: vehicleType,
             dropOffLat: dropOffLat,
             dropOffLong: dropOffLong,
             pickUpLat: pickUpLat,
@@ -103,21 +105,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var markers = ref.read(markersProvider);
+    // var markers = ref.read(markersProvider);
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         iconTheme: const IconThemeData(color: Colors.white, size: 22),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: IconButton(
-            onPressed: () => navigateTo(context, '/drive-request-screen'),
-            icon: Icon(Icons.car_crash, color: Colors.grey[300]),
-            style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Colors.black),
-              shape: MaterialStatePropertyAll(CircleBorder()),
-            ),
+        title: TextButton(
+          onPressed: () => navigateTo(context, '/drive-request-screen'),
+          // style: const ButtonStyle(
+          //   backgroundColor: MaterialStatePropertyAll(Colors.black),
+          //   shape: MaterialStatePropertyAll(RoundedRectangleBorder()),
+          // ),
+          child: const Text(
+            "Requested ride...",
+            style: TextStyle(color: Colors.green, fontSize: 18.0),
           ),
         ),
         actions: [
@@ -142,11 +144,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           const SizedBox(height: 20.0),
 
           // location pickup
-          buildPickUpTextField(markers),
+          buildPickUpTextField(),
           const SizedBox(height: 10.0),
 
           // location destination
-          buildDropOffTextField(markers),
+          buildDropOffTextField(),
           const SizedBox(height: 20.0),
 
           // vehicles list
@@ -207,13 +209,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       apiKey: AppText.kGooglePlacesApiKey,
       components: [Component(Component.country, "pk")],
       types: [],
-      hint: "Search City",
+      hint: "Search Area",
     );
 
     return p;
   }
 
-  Widget buildDropOffTextField(var markers) {
+  Widget buildDropOffTextField() {
     return Container(
       width: double.infinity,
       height: 50,
@@ -264,17 +266,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ref
               .read(mapNotifierProvider.notifier)
               .setDropOffLocation(destination);
-
-          ref.read(markersProvider).add(
-                Marker(
-                  markerId: MarkerId(selectedPlace),
-                  infoWindow: InfoWindow(title: 'Destination: $selectedPlace'),
-                  position: destination,
-                  icon: BitmapDescriptor.fromBytes(markIcons),
-                ),
-              );
-
-          _dropOffController.clear();
         },
         style: GoogleFonts.poppins(
           fontSize: 16,
@@ -298,7 +289,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget buildPickUpTextField(var markers) {
+  Widget buildPickUpTextField() {
     return Container(
       width: double.infinity,
       height: 50,
@@ -348,19 +339,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               .update((state) => locations.first.longitude);
 
           ref.read(mapNotifierProvider.notifier).setPickUpLocation(destination);
-
-          ref.read(markersProvider).add(
-                Marker(
-                  markerId: MarkerId(selectedPlace),
-                  infoWindow: InfoWindow(
-                    title: 'Destination: $selectedPlace',
-                  ),
-                  position: destination,
-                  icon: BitmapDescriptor.fromBytes(markIcons),
-                ),
-              );
-
-          _pickUpController.clear();
         },
         style: GoogleFonts.poppins(
           fontSize: 16,

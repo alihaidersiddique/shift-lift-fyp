@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -9,46 +8,49 @@ import 'package:shift_lift/core/constants/constants.dart';
 
 import '../../../core/models/map_model.dart';
 
-// users actual pick-up and drop-off locations
+// users selected addresses in string format
+final sourceLocationProvider = StateProvider<String>((ref) => "");
+final destinationLocationProvider = StateProvider<String>((ref) => "");
+
+// users pick-up lat and long
 final pickupLatProvider = StateProvider<double>((ref) => 0.00);
 final pickupLongProvider = StateProvider<double>((ref) => 0.00);
 
+// users drop-off lat and long
 final dropoffLatProvider = StateProvider<double>((ref) => 0.00);
 final dropoffLongProvider = StateProvider<double>((ref) => 0.00);
 
+// users pick-up location
 final pickupLocationProvider = StateProvider<LatLng>((ref) {
   final latitude = ref.read(pickupLatProvider);
   final longitude = ref.read(pickupLongProvider);
   return LatLng(latitude, longitude);
 });
 
+// users drop-off location
 final dropoffLocationProvider = StateProvider<LatLng>((ref) {
   final latitude = ref.read(dropoffLatProvider);
   final longitude = ref.read(dropoffLongProvider);
   return LatLng(latitude, longitude);
 });
 
-// for map
-final markersProvider = StateProvider<Set<Marker>>((ref) {
-  return <Marker>{};
-});
-final mapPolylineProvider = StateProvider<Polyline>(
-  (ref) {
-    final source = ref.read(pickupLocationProvider);
-    final destination = ref.read(dropoffLocationProvider);
+// // for map
+// final markersProvider = StateProvider<Set<Marker>>((ref) {
+//   return <Marker>{};
+// });
+// final mapPolylineProvider = StateProvider<Polyline>(
+//   (ref) {
+//     final source = ref.read(pickupLocationProvider);
+//     final destination = ref.read(dropoffLocationProvider);
 
-    return Polyline(
-      polylineId: const PolylineId('route'),
-      color: Colors.blue,
-      width: 5,
-      points: [source, destination],
-    );
-  },
-);
-
-// users selected addresses in string format
-final sourceLocationProvider = StateProvider<String>((ref) => "");
-final destinationLocationProvider = StateProvider<String>((ref) => "");
+//     return Polyline(
+//       polylineId: const PolylineId('route'),
+//       color: Colors.blue,
+//       width: 5,
+//       points: [source, destination],
+//     );
+//   },
+// );
 
 final mapNotifierProvider =
     StateNotifierProvider<MapController, MapModel>((ref) {
