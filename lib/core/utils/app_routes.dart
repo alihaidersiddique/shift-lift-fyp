@@ -52,9 +52,9 @@ final GoRouter appRoutes = GoRouter(
           pageBuilder: (context, state) => MaterialPage(child: ProfileScreen()),
         ),
         GoRoute(
-          path: 'drive-request-screen',
+          path: 'available-drivers-screen',
           pageBuilder: (context, state) =>
-              const MaterialPage(child: DriveRequestScreen()),
+              const MaterialPage(child: AvailableDriversScreen()),
         ),
         GoRoute(
           path: 'driver-regsitration-screen',

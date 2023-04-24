@@ -1,21 +1,36 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shift_lift/core/models/available_driver_model.dart';
+import 'package:square_progress_bar/square_progress_bar.dart';
 import '../../driver/home/controller/home_controller.dart';
 import '../../map/controller/map_controller.dart';
 import '../../../utils/utils.dart';
 
-class DriveRequestScreen extends ConsumerStatefulWidget {
-  const DriveRequestScreen({super.key});
+class AvailableDriversScreen extends ConsumerStatefulWidget {
+  const AvailableDriversScreen({super.key});
 
   @override
-  ConsumerState<DriveRequestScreen> createState() => _DriveRequestScreenState();
+  ConsumerState<AvailableDriversScreen> createState() =>
+      _AvailableDriversScreenState();
 }
 
-class _DriveRequestScreenState extends ConsumerState<DriveRequestScreen> {
+class _AvailableDriversScreenState
+    extends ConsumerState<AvailableDriversScreen> {
+  double _progress = 0.0;
+
+  void _incrementFloat() {
+    Timer(Duration(seconds: 5), () {
+      setState(() {
+        _progress += 5.0;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +43,12 @@ class _DriveRequestScreenState extends ConsumerState<DriveRequestScreen> {
             size: 20,
           ),
         ),
+        title: const Text(
+          "Available drivers...",
+          style: TextStyle(fontSize: 23.0),
+        ),
+        centerTitle: true,
+        titleSpacing: 2,
         backgroundColor: Colors.white,
         elevation: 2,
         actions: [
@@ -67,27 +88,58 @@ class _DriveRequestScreenState extends ConsumerState<DriveRequestScreen> {
                   ],
                 );
               }
-
+              // _incrementFloat();
               return Center(
                 child: CarouselSlider(
                   options: CarouselOptions(
-                    height: 600,
-                    viewportFraction: 0.7,
+                    // clipBehavior: Clip.antiAlias,
+                    // scrollDirection: Axis.vertical,
+                    height: 400,
+                    viewportFraction: 0.92,
                     initialPage: 0,
-                    enableInfiniteScroll: true,
+                    // enableInfiniteScroll: false,
                     reverse: false,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 5),
                     autoPlayAnimationDuration:
                         const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
+                    autoPlayCurve: Curves.bounceInOut,
                     enlargeCenterPage: true,
-                    enlargeFactor: 0.3,
+                    enlargeFactor: 0.6,
                   ),
                   items: drivers.map((driver) {
                     return Builder(
-                      builder: (BuildContext context) =>
-                          DriverCardWidget(driver: driver),
+                      builder: (BuildContext context) {
+                        return SquareProgressBar(
+                          // width: 100, // default: max available space
+                          // height: 100, // default: max available space
+                          progress:
+                              1.2, // provide the progress in a range from 0.0 to 1.0
+                          isAnimation:
+                              true, // default: false, animate the progress of the bar
+                          animationDuration: const Duration(seconds: 5),
+                          solidBarColor: AppColors
+                              .secondaryColor, // default: blue, main bar color
+                          emptyBarColor: AppColors.primaryColor.withOpacity(
+                            0.2,
+                          ), // default: gray, empty bar color
+                          strokeWidth: 10, // default: 15, bar width
+                          barStrokeCap: StrokeCap
+                              .square, // default: StrokeCap.round, bar cap shape
+                          isRtl: true, // default: false, bar start point
+                          gradientBarColor: const LinearGradient(
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                            colors: <Color>[
+                              AppColors.primaryColor,
+                              AppColors.primaryColor
+                            ],
+                            tileMode: TileMode.repeated,
+                          ),
+
+                          child: DriverCardWidget(driver: driver),
+                        );
+                      },
                     );
                   }).toList(),
                 ),
@@ -195,7 +247,7 @@ class DriverCardWidget extends StatelessWidget {
 
             // photo
             Container(
-              height: 50,
+              height: 100,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
@@ -212,7 +264,7 @@ class DriverCardWidget extends StatelessWidget {
               driver.displayName!,
               style: mdClHd.copyWith(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 22,
               ),
             ),
             const SizedBox(height: 5.0),
@@ -234,20 +286,24 @@ class DriverCardWidget extends StatelessWidget {
             const SizedBox(height: 20.0),
 
             // buttons
-            RideButtonWidget(
-              bgColor: AppColors.primaryColor,
-              text: "Accept",
-              textColor: Colors.white,
-              onTap: () {},
-            ),
-            const SizedBox(height: 10.0),
-
-            RideButtonWidget(
-              bgColor: Colors.grey.withOpacity(0.05),
-              text: "Decline",
-              textColor: Colors.black,
-              onTap: () {},
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // const SizedBox(height: 10.0),
+                RideButtonWidget(
+                  bgColor: Colors.grey.withOpacity(0.05),
+                  text: "Decline",
+                  textColor: Colors.black,
+                  onTap: () {},
+                ),
+                RideButtonWidget(
+                  bgColor: AppColors.primaryColor,
+                  text: "Accept",
+                  textColor: Colors.white,
+                  onTap: () {},
+                ),
+              ],
+            )
           ],
         ),
       ),

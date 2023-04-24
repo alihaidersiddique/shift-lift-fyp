@@ -14,7 +14,6 @@ class CustomerRequestWidget extends ConsumerWidget {
     required this.distance,
     required this.amount,
     required this.profileImage,
-    required this.mapImage,
     required this.clientName,
     required this.pickUp,
     required this.dropOff,
@@ -28,7 +27,6 @@ class CustomerRequestWidget extends ConsumerWidget {
   final String distance;
   final double amount;
   final String profileImage;
-  final String mapImage;
   final String clientName;
   final String pickUp;
   final String dropOff;

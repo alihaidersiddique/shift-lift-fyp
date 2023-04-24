@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 
 enum RideStatus {
   initial,
-  requesting,
   requested,
   booking,
   booked,

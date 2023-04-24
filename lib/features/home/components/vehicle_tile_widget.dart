@@ -35,6 +35,14 @@ class VehicleTileWidget extends ConsumerWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: const Color(0xffFFFFFF),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.6),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: const Offset(0, 1), // changes position of shadow
+            ),
+          ],
           border: Border.all(
             color: selectedTileValue == index
                 ? AppColors.primaryColor
@@ -94,23 +102,23 @@ class VehicleTileWidget extends ConsumerWidget {
                 const Spacer(),
 
                 // box image
-                Center(child: Image.asset("assets/images/EmptyBox.png")),
+                // Center(child: Image.asset("assets/images/EmptyBox.png")),
               ],
             ),
 
-            const Divider(),
+            // const Divider(),
             const SizedBox(height: 5.0),
 
             // suggestions box
-            SizedBox(
-              height: 40.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: suggestions.length,
-                itemBuilder: (context, index) =>
-                    SuggestItemWidget(text: suggestions[index]),
-              ),
-            )
+            // SizedBox(
+            //   height: 40.0,
+            //   child: ListView.builder(
+            //     scrollDirection: Axis.horizontal,
+            //     itemCount: suggestions.length,
+            //     itemBuilder: (context, index) =>
+            //         SuggestItemWidget(text: suggestions[index]),
+            //   ),
+            // )
           ],
         ),
       ),

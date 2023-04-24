@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:ui' as ui;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
+import 'package:flutter/services.dart' show Uint8List;
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart' as geo_coding;
@@ -17,7 +16,6 @@ import 'package:shift_lift/features/home/components/vehicle_tile_widget.dart';
 
 import '../../utils/utils.dart';
 import '../auth/controller/auth_controller.dart';
-import '../driver/home/controller/home_controller.dart';
 import '../map/controller/map_controller.dart';
 import '../ride/controllers/ride_controller.dart';
 import 'components/rider_drawer.dart';
@@ -43,25 +41,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // loadCustomMarker();
   }
 
   Future<QuerySnapshot> fetchAppVehicles() async =>
       await FirebaseFirestore.instance.collection('appVehicles').get();
-
-  // loadCustomMarker() async {
-  //   markIcons = await loadAsset('assets/images/dest_marker.png', 100);
-  // }
-
-  // Future<Uint8List> loadAsset(String path, int width) async {
-  //   ByteData data = await rootBundle.load(path);
-  //   ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-  //       targetHeight: width);
-  //   ui.FrameInfo fi = await codec.getNextFrame();
-  //   return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-  //       .buffer
-  //       .asUint8List();
-  // }
 
   void validateFields() async {
     if (_pickUpController.text.isEmpty) {
@@ -83,7 +66,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       final pickUpLat = ref.read(pickupLatProvider);
       final pickUpLong = ref.read(pickupLongProvider);
 
-      ref.read(rideControllerProvider.notifier).requestRide(
+      await ref.read(rideControllerProvider.notifier).requestRide(
             pickUpAddress: pickupLocation,
             dropOffAddress: dropoffLocation,
             customerId: user.uid,
@@ -96,10 +79,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             dropOffLong: dropOffLong,
             pickUpLat: pickUpLat,
             pickUpLong: pickUpLong,
+            context: context,
           );
-
-      navigateTo(context, '/drive-request-screen');
-      debugPrint("we are navigating...");
     }
   }
 
@@ -112,7 +93,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         automaticallyImplyLeading: false,
         iconTheme: const IconThemeData(color: Colors.white, size: 22),
         title: TextButton(
-          onPressed: () => navigateTo(context, '/drive-request-screen'),
+          onPressed: () => navigateTo(context, '/available-drivers-screen'),
           // style: const ButtonStyle(
           //   backgroundColor: MaterialStatePropertyAll(Colors.black),
           //   shape: MaterialStatePropertyAll(RoundedRectangleBorder()),

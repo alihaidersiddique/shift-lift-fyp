@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/models/ride_model.dart';
+import '../../../core/utils.dart';
 import '../repositories/ride_repository.dart';
 
 final rideControllerProvider = StateNotifierProvider<RideController, RideModel>(
-  (ref) => RideController(
-    ref.watch(rideRepositoryProvider),
-  ),
+  (ref) => RideController(ref.watch(rideRepositoryProvider)),
 );
 
 class RideController extends StateNotifier<RideModel> {
@@ -50,10 +49,11 @@ class RideController extends StateNotifier<RideModel> {
     double? dropOffLong,
     double? pickUpLat,
     double? pickUpLong,
+    String? docId,
+    required BuildContext context,
   }) async {
     try {
-      state = state.copyWith(rideStatus: RideStatus.requesting);
-
+      //
       final ride = RideModel(
         rideId: rideId ?? "",
         pickUpAddress: pickUpAddress ?? "",
@@ -71,29 +71,47 @@ class RideController extends StateNotifier<RideModel> {
         pickUpLong: pickUpLong ?? 0.00,
       );
 
-      final docRef = await _rideRepository.requestRide(ride);
+      final res = await _rideRepository.requestRide(ride);
 
-      state = state.copyWith(
-        rideId: docRef.id,
-        pickUpAddress: pickUpAddress,
-        dropOffAddress: dropOffAddress,
-        customerId: customerId,
-        customerName: customerName,
-        customerPhoto: customerPhoto,
-        distance: distance,
-        duration: duration,
-        vehicleType: vehicleType,
-        rideStatus: RideStatus.requested,
-        dropOffLat: dropOffLat,
-        dropOffLong: dropOffLong,
-        pickUpLat: pickUpLat,
-        pickUpLong: pickUpLong,
+      res.fold(
+        (l) {
+          state = state.copyWith(
+            rideStatus: RideStatus.error,
+            errorMessage: l.toString(),
+          );
+
+          showSnackBar(context, l.message);
+        },
+        (r) {
+          showSnackBar(context, "Your ride has been requested");
+
+          state = state.copyWith(
+            rideId: r.id,
+            pickUpAddress: pickUpAddress,
+            dropOffAddress: dropOffAddress,
+            customerId: customerId,
+            customerName: customerName,
+            customerPhoto: customerPhoto,
+            distance: distance,
+            duration: duration,
+            vehicleType: vehicleType,
+            rideStatus: RideStatus.requested,
+            dropOffLat: dropOffLat,
+            dropOffLong: dropOffLong,
+            pickUpLat: pickUpLat,
+            pickUpLong: pickUpLong,
+          );
+
+          navigateTo(context, '/available-drivers-screen');
+        },
       );
     } catch (e) {
       state = state.copyWith(
         rideStatus: RideStatus.error,
         errorMessage: e.toString(),
       );
+
+      showSnackBar(context, e.toString());
     }
   }
 
