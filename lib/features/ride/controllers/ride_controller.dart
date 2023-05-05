@@ -30,6 +30,7 @@ class RideController extends StateNotifier<RideModel> {
             pickUpLong: 0.00,
             dropOffLat: 0.00,
             dropOffLong: 0.00,
+            rideDriver: "",
           ),
         );
 
@@ -50,6 +51,7 @@ class RideController extends StateNotifier<RideModel> {
     double? pickUpLat,
     double? pickUpLong,
     String? docId,
+    String? rideDriver,
     required BuildContext context,
   }) async {
     try {
@@ -69,7 +71,10 @@ class RideController extends StateNotifier<RideModel> {
         dropOffLong: dropOffLong ?? 0.00,
         pickUpLat: pickUpLat ?? 0.00,
         pickUpLong: pickUpLong ?? 0.00,
+        rideDriver: rideDriver ?? "",
       );
+
+      showCircularProgressIndicator(context);
 
       final res = await _rideRepository.requestRide(ride);
 
@@ -79,12 +84,10 @@ class RideController extends StateNotifier<RideModel> {
             rideStatus: RideStatus.error,
             errorMessage: l.toString(),
           );
-
+          Navigator.pop(context);
           showSnackBar(context, l.message);
         },
         (r) {
-          showSnackBar(context, "Your ride has been requested");
-
           state = state.copyWith(
             rideId: r.id,
             pickUpAddress: pickUpAddress,
@@ -102,6 +105,8 @@ class RideController extends StateNotifier<RideModel> {
             pickUpLong: pickUpLong,
           );
 
+          Navigator.pop(context);
+          showSnackBar(context, "Your ride has been requested");
           navigateTo(context, '/available-drivers-screen');
         },
       );
@@ -130,6 +135,36 @@ class RideController extends StateNotifier<RideModel> {
 
       state = state.copyWith(rideStatus: RideStatus.booking);
       debugPrint("Ride Status: ${state.rideStatus}");
+    } catch (e) {
+      state = state.copyWith(
+        rideStatus: RideStatus.error,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
+  Future<void> acceptDriver({
+    required String driverId,
+    required String rideId,
+    required BuildContext context,
+  }) async {
+    try {
+      showCircularProgressIndicator(context);
+
+      final res = await _rideRepository.acceptDriver(rideId, driverId);
+
+      res.fold(
+        (l) {
+          Navigator.pop(context);
+          showSnackBar(context, l.message);
+        },
+        (r) {
+          state = state.copyWith(rideStatus: RideStatus.booked);
+          Navigator.pop(context);
+          navigateTo(context, "/booked-ride-screen");
+          showSnackBar(context, "Your ride is booked!");
+        },
+      );
     } catch (e) {
       state = state.copyWith(
         rideStatus: RideStatus.error,

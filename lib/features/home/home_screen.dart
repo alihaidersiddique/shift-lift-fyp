@@ -14,6 +14,7 @@ import 'package:shift_lift/core/constants/constants.dart';
 import 'package:shift_lift/core/utils.dart';
 import 'package:shift_lift/features/home/components/vehicle_tile_widget.dart';
 
+import '../../commons/app_drawer.dart';
 import '../../utils/utils.dart';
 import '../auth/controller/auth_controller.dart';
 import '../map/controller/map_controller.dart';
@@ -94,43 +95,58 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         iconTheme: const IconThemeData(color: Colors.white, size: 22),
         title: TextButton(
           onPressed: () => navigateTo(context, '/available-drivers-screen'),
-          // style: const ButtonStyle(
-          //   backgroundColor: MaterialStatePropertyAll(Colors.black),
-          //   shape: MaterialStatePropertyAll(RoundedRectangleBorder()),
-          // ),
           child: const Text(
             "Requested ride...",
             style: TextStyle(color: Colors.green, fontSize: 18.0),
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: IconButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.grey[300]),
-              ),
-              onPressed: () async => openDrawer(context),
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.black,
-              ),
-              color: AppColors.primaryColor,
-            ),
-          ),
+        actions: const [
+          AppDrawer(),
         ],
       ),
       body: Column(
         children: [
           const SizedBox(height: 20.0),
 
-          // location pickup
+          //
           buildPickUpTextField(),
+
           const SizedBox(height: 10.0),
 
-          // location destination
+          //
+          Padding(
+            padding: const EdgeInsets.only(left: 35.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Transform.rotate(
+                angle: 90 * 3.1415926535 / 180,
+                child: const Icon(Icons.linear_scale),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 10.0),
+
+          //
           buildDropOffTextField(),
-          const SizedBox(height: 20.0),
+
+          //
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Make Offer",
+                icon: const Text("Rs."),
+                suffixIcon: Icon(
+                  Icons.money,
+                  color: Colors.green.shade600,
+                ),
+              ),
+            ),
+          ),
+
+          const Divider(),
 
           // vehicles list
           verticalSlider(ref)
@@ -150,6 +166,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
+              padding: const EdgeInsets.only(top: 10.0),
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) => VehicleTileWidget(
                 index: index,
@@ -198,20 +215,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget buildDropOffTextField() {
     return Container(
-      width: double.infinity,
-      height: 50,
+      // width: double.infinity,
+      // height: 50,
       padding: const EdgeInsets.only(left: 15),
       margin: const EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              spreadRadius: 4,
-              blurRadius: 10,
-            )
-          ],
-          borderRadius: BorderRadius.circular(8)),
+        color: Colors.white,
+        // border: Border.all(color: Colors.grey.shade500),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            spreadRadius: 4,
+            blurRadius: 10,
+          )
+        ],
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: TextFormField(
         controller: _dropOffController,
         readOnly: true,
@@ -258,12 +277,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
-          suffixIcon: const Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Icon(
-              Icons.search,
-            ),
-          ),
+          icon: const Icon(Icons.adjust),
+          suffixIcon: const Icon(Icons.search),
           border: InputBorder.none,
         ),
       ),
@@ -272,12 +287,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget buildPickUpTextField() {
     return Container(
-      width: double.infinity,
-      height: 50,
+      // width: double.infinity,
+      // height: 50,
       padding: const EdgeInsets.only(left: 15),
       margin: const EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(
         color: Colors.white,
+        // border: Border.all(color: Colors.grey.shade500),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -331,12 +347,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
-          suffixIcon: const Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Icon(
-              Icons.search,
-            ),
-          ),
+          icon: const Icon(Icons.location_pin),
+          suffixIcon: const Icon(Icons.search),
           border: InputBorder.none,
         ),
       ),

@@ -75,7 +75,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              AppText.getShiftingWithShiftLift,
+              AppText.createAccount,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 25.0,

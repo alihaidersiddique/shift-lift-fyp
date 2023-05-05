@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shift_lift/features/auth/controller/auth_controller.dart';
 import 'package:shift_lift/utils/utils.dart';
 
 import '../../../core/constants/constants.dart';
@@ -23,34 +21,17 @@ class ModeScreen extends ConsumerWidget {
 
     final docRef = collectionRef.doc(user!.phoneNumber);
 
-    docRef.update({'mode': mode});
-
-    navigateTo(context, '/home-screen');
+    if (mode == "driver") {
+      docRef.update({'mode': mode});
+      navigateTo(context, '/driver-registration-screen');
+    } else {
+      docRef.update({'mode': mode});
+      navigateTo(context, '/home-screen');
+    }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final firestore = ref.read(firestoreProvider);
-
-    // final user = ref.read(authProvider).currentUser;
-
-    // final collectionRef = firestore.collection('users');
-
-    // final docRef = collectionRef.doc(user!.phoneNumber);
-
-    // docRef.get();
-
-    // String userName = "";
-
-    // Future<String> setUserName() async {
-    //   final userDocument = await FirebaseFirestore.instance
-    //       .collection('users')
-    //       .doc(user.phoneNumber)
-    //       .get();
-    //   userName = userDocument.get('displayName') as String;
-    //   return userName;
-    // }
-
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,19 +74,19 @@ class ModeScreen extends ConsumerWidget {
             ),
           ),
 
-          // // customer name here
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          //   child: Text(
-          //     userName,
-          //     style: GoogleFonts.poppins(
-          //       color: Colors.black,
-          //       fontSize: 25.0,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //   ),
-          // ),
-          const SizedBox(height: 20.0),
+          // what you will be
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              AppText.whatYouWillBe,
+              style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 30.0),
 
           // cutomer button
           ModeButtonWidget(
@@ -113,14 +94,17 @@ class ModeScreen extends ConsumerWidget {
             onPress: () => addMode(ref, "customer", context),
           ),
 
+          const SizedBox(height: 10.0),
+          const Center(child: Text("or")),
+          const SizedBox(height: 10.0),
+
           // driver button
-          const SizedBox(height: 20.0),
           ModeButtonWidget(
             name: AppText.driver,
             onPress: () => addMode(ref, "driver", context),
           ),
 
-          const SizedBox(height: 30),
+          const SizedBox(height: 50),
         ],
       ),
     );

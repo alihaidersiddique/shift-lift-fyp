@@ -5,8 +5,19 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: const [
+            CircularProgressIndicator(),
+            SizedBox(width: 20.0),
+            Text("Loading...")
+          ],
+        ),
+      ),
     );
   }
 }

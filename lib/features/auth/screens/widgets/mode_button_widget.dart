@@ -16,10 +16,16 @@ class ModeButtonWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          elevation: 2.0,
           minimumSize: const Size(double.infinity, 50),
         ),
         onPressed: onPress,
-        child: Text(name),
+        child: Text(
+          name,
+          style: const TextStyle(
+            fontSize: 20.0,
+          ),
+        ),
       ),
     );
   }

@@ -68,7 +68,7 @@ class CustomerRequestWidget extends ConsumerWidget {
                 style: GoogleFonts.kadwa(fontSize: 15),
               ),
               Text(
-                "PKR ${amount.toString()}",
+                "PKR 250",
                 style: GoogleFonts.kadwa(
                     fontSize: 24,
                     color: AppColors.primaryColor,

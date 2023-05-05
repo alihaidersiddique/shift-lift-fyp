@@ -22,6 +22,16 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
+        backgroundColor: AppColors.primaryColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,56 +108,30 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
             ),
             child: const PinputWidget(),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 80),
 
           // resend code widget
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                style: GoogleFonts.poppins(color: Colors.black, fontSize: 14),
-                children: [
-                  const TextSpan(
-                    text: AppText.resendCode,
-                  ),
-                  TextSpan(
-                    text: " 10 ${AppText.seconds}",
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 70),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          //   child: RichText(
+          //     textAlign: TextAlign.center,
+          //     text: TextSpan(
+          //       style: GoogleFonts.poppins(color: Colors.black, fontSize: 14),
+          //       children: [
+          //         const TextSpan(
+          //           text: AppText.resendCode,
+          //         ),
+          //         TextSpan(
+          //           text: " 10 ${AppText.seconds}",
+          //           style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(height: 70),
         ],
       ),
     );
-  }
-}
-
-class CustomClipPath extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    double w = size.width;
-    double h = size.height;
-
-    final path0 = Path();
-
-    path0.moveTo(size.width * 0.2990000, size.height * 0.3000000);
-    path0.lineTo(size.width * 0.7010000, size.height * 0.3000000);
-    path0.quadraticBezierTo(size.width * 0.6997500, size.height * 0.6005000,
-        size.width * 0.7000000, size.height * 0.7000000);
-    path0.quadraticBezierTo(size.width * 0.4985000, size.height * 0.8280000,
-        size.width * 0.3010000, size.height * 0.6980000);
-    path0.lineTo(size.width * 0.2990000, size.height * 0.3000000);
-    path0.close();
-
-    return path0;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    throw UnimplementedError();
   }
 }

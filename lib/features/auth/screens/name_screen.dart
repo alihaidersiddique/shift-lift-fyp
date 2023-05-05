@@ -16,6 +16,25 @@ class NameScreen extends ConsumerStatefulWidget {
 class _NameScreenState extends ConsumerState<NameScreen> {
   TextEditingController nameController = TextEditingController();
 
+  void validateName() async {
+    if (nameController.text.isEmpty) {
+      showSnackBar(context, "Please enter your full name");
+    } else {
+      final firestore = ref.read(firestoreProvider);
+
+      final user = ref.read(authProvider).currentUser;
+
+      final collectionRef = firestore.collection('users');
+
+      final docRef = collectionRef.doc(user!.phoneNumber);
+
+      docRef.update({
+        'displayName': nameController.text,
+      });
+      navigateTo(context, '/mode-screen');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +91,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 40.0),
+          const SizedBox(height: 30.0),
 
           // full name
           NameTextField(controller: nameController),
@@ -95,32 +114,10 @@ class _NameScreenState extends ConsumerState<NameScreen> {
       ),
     );
   }
-
-  void validateName() async {
-    if (nameController.text.isEmpty) {
-      showSnackBar(context, "Please enter your full name");
-    } else {
-      final firestore = ref.read(firestoreProvider);
-
-      final user = ref.read(authProvider).currentUser;
-
-      final collectionRef = firestore.collection('users');
-
-      final docRef = collectionRef.doc(user!.phoneNumber);
-
-      docRef.update({
-        'displayName': nameController.text,
-      });
-      navigateTo(context, '/mode-screen');
-    }
-  }
 }
 
 class NameTextField extends StatelessWidget {
-  const NameTextField({
-    super.key,
-    required this.controller,
-  });
+  const NameTextField({super.key, required this.controller});
 
   final TextEditingController controller;
 
@@ -152,31 +149,5 @@ class NameTextField extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class CustomClipPath extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    double w = size.width;
-    double h = size.height;
-
-    final path0 = Path();
-
-    path0.moveTo(size.width * 0.2990000, size.height * 0.3000000);
-    path0.lineTo(size.width * 0.7010000, size.height * 0.3000000);
-    path0.quadraticBezierTo(size.width * 0.6997500, size.height * 0.6005000,
-        size.width * 0.7000000, size.height * 0.7000000);
-    path0.quadraticBezierTo(size.width * 0.4985000, size.height * 0.8280000,
-        size.width * 0.3010000, size.height * 0.6980000);
-    path0.lineTo(size.width * 0.2990000, size.height * 0.3000000);
-    path0.close();
-
-    return path0;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    throw UnimplementedError();
   }
 }

@@ -6,10 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shift_lift/core/models/available_driver_model.dart';
+import 'package:shift_lift/core/utils.dart';
 import 'package:square_progress_bar/square_progress_bar.dart';
 import '../../driver/home/controller/home_controller.dart';
 import '../../map/controller/map_controller.dart';
 import '../../../utils/utils.dart';
+import '../controllers/ride_controller.dart';
 
 class AvailableDriversScreen extends ConsumerStatefulWidget {
   const AvailableDriversScreen({super.key});
@@ -21,16 +23,6 @@ class AvailableDriversScreen extends ConsumerStatefulWidget {
 
 class _AvailableDriversScreenState
     extends ConsumerState<AvailableDriversScreen> {
-  double _progress = 0.0;
-
-  void _incrementFloat() {
-    Timer(Duration(seconds: 5), () {
-      setState(() {
-        _progress += 5.0;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +36,7 @@ class _AvailableDriversScreenState
           ),
         ),
         title: const Text(
-          "Available drivers...",
+          "Finding drivers...",
           style: TextStyle(fontSize: 23.0),
         ),
         centerTitle: true,
@@ -88,7 +80,6 @@ class _AvailableDriversScreenState
                   ],
                 );
               }
-              // _incrementFloat();
               return Center(
                 child: CarouselSlider(
                   options: CarouselOptions(
@@ -97,7 +88,7 @@ class _AvailableDriversScreenState
                     height: 400,
                     viewportFraction: 0.92,
                     initialPage: 0,
-                    // enableInfiniteScroll: false,
+                    enableInfiniteScroll: false,
                     reverse: false,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 5),
@@ -111,8 +102,6 @@ class _AvailableDriversScreenState
                     return Builder(
                       builder: (BuildContext context) {
                         return SquareProgressBar(
-                          // width: 100, // default: max available space
-                          // height: 100, // default: max available space
                           progress:
                               1.2, // provide the progress in a range from 0.0 to 1.0
                           isAnimation:
@@ -137,7 +126,7 @@ class _AvailableDriversScreenState
                             tileMode: TileMode.repeated,
                           ),
 
-                          child: DriverCardWidget(driver: driver),
+                          child: DriverCardWidget(driver: driver, ref: ref),
                         );
                       },
                     );
@@ -219,19 +208,30 @@ class DriverCardWidget extends StatelessWidget {
   const DriverCardWidget({
     Key? key,
     required this.driver,
+    required this.ref,
   }) : super(key: key);
 
   final AvailableDriverModel driver;
+  final WidgetRef ref;
+
+  Future<void> acceptDriver(
+      String driverPhone, String rideId, BuildContext context) {
+    return ref
+        .read(rideControllerProvider.notifier)
+        .acceptDriver(driverId: driverPhone, rideId: rideId, context: context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2.0,
+      // elevation: 2.0,
       color: Colors.white,
+      shape: const RoundedRectangleBorder(),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // time and price
@@ -300,7 +300,10 @@ class DriverCardWidget extends StatelessWidget {
                   bgColor: AppColors.primaryColor,
                   text: "Accept",
                   textColor: Colors.white,
-                  onTap: () {},
+                  onTap: () async {
+                    await acceptDriver(
+                        driver.phoneNumber!, driver.rideId!, context);
+                  },
                 ),
               ],
             )

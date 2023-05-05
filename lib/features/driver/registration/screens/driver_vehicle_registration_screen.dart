@@ -11,15 +11,16 @@ import '../../../../core/utils/app_image_picker.dart';
 import '../../../../utils/commons/app_button.dart';
 import '../../home/screens/driver_home_screen.dart';
 
-class VehiclePictureScreen extends ConsumerStatefulWidget {
-  const VehiclePictureScreen({super.key});
+class DriverVehicleRegistrationScreen extends ConsumerStatefulWidget {
+  const DriverVehicleRegistrationScreen({super.key});
 
   @override
-  ConsumerState<VehiclePictureScreen> createState() =>
+  ConsumerState<DriverVehicleRegistrationScreen> createState() =>
       _VehiclePictureScreenState();
 }
 
-class _VehiclePictureScreenState extends ConsumerState<VehiclePictureScreen> {
+class _VehiclePictureScreenState
+    extends ConsumerState<DriverVehicleRegistrationScreen> {
   XFile? frontImage;
   XFile? backImage;
 
@@ -44,6 +45,9 @@ class _VehiclePictureScreenState extends ConsumerState<VehiclePictureScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: () => navigateTo(context, 'driver-license-screen'),
+        ),
         backgroundColor: Colors.white,
         title: Text(
           AppText.vehiclepic,

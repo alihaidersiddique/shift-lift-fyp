@@ -22,6 +22,7 @@ class RideModel {
   final String duration;
   final String distance;
   final String vehicleType;
+  final String? rideDriver;
   final RideStatus rideStatus;
   final String? errorMessage;
   final double? pickUpLat;
@@ -36,6 +37,7 @@ class RideModel {
     required this.vehicleType,
     required this.rideStatus,
     this.errorMessage,
+    required this.rideDriver,
     required this.customerId,
     required this.customerName,
     required this.customerPhoto,
@@ -63,6 +65,7 @@ class RideModel {
       'pickUpLong': pickUpLong,
       'dropOffLat': dropOffLat,
       'dropOffLong': dropOffLong,
+      'rideDriver': rideDriver,
     };
   }
 
@@ -86,6 +89,7 @@ class RideModel {
       pickUpLong: json['pickUpLong'] ?? 0.00,
       dropOffLat: json['dropOffLat'] ?? 0.00,
       dropOffLong: json['dropOffLong'] ?? 0.00,
+      rideDriver: json['rideDriver'] ?? "",
     );
   }
 
@@ -105,6 +109,7 @@ class RideModel {
     double? dropOffLong,
     double? pickUpLat,
     double? pickUpLong,
+    String? rideDriver,
   }) {
     return RideModel(
       rideId: rideId ?? this.rideId,
@@ -122,6 +127,7 @@ class RideModel {
       pickUpLong: pickUpLong ?? this.pickUpLong,
       dropOffLat: dropOffLat ?? this.dropOffLat,
       dropOffLong: dropOffLong ?? this.dropOffLong,
+      rideDriver: rideDriver ?? this.rideDriver,
     );
   }
 }

@@ -52,6 +52,7 @@ class AuthRepository {
       phoneNumber: user.phoneNumber!,
       displayName: user.displayName,
       photoUrl: user.photoURL,
+      driverProfile: false,
       address: "",
       email: "",
       dateOfBirth: "",

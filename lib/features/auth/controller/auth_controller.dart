@@ -77,6 +77,7 @@ class AuthController extends StateNotifier<UserModel> {
       address: user.address,
       dateOfBirth: user.dateOfBirth,
       gender: user.gender,
+      driverProfile: user.driverProfile,
     );
 
     return user;
@@ -84,8 +85,6 @@ class AuthController extends StateNotifier<UserModel> {
 
   Future<void> updateProfileImage(String photoUrl, BuildContext context) async {
     try {
-      state = state.copyWith(photoUrl: photoUrl);
-
       showCircularProgressIndicator(context);
 
       final res =
@@ -97,6 +96,7 @@ class AuthController extends StateNotifier<UserModel> {
           showSnackBar(context, l.message);
         },
         (r) {
+          state = state.copyWith(photoUrl: photoUrl);
           Navigator.pop(context);
           showSnackBar(context, "Profile Picture updated successfully!");
         },

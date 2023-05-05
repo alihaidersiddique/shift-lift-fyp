@@ -1,29 +1,52 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shift_lift/core/constants/constants.dart';
+import '../../../../core/providers/firebase_providers.dart';
 import '../../../../core/utils.dart';
 import '../../../../core/utils/app_image_picker.dart';
-import '../../../../utils/app_colors.dart';
 import '../../../../utils/commons/app_button.dart';
-import 'id_confirmation_screeen.dart';
+
+import 'dart:io' as io;
 
 class DriverBasicInfoScreen extends ConsumerStatefulWidget {
   const DriverBasicInfoScreen({super.key});
 
   @override
-  ConsumerState<DriverBasicInfoScreen> createState() => _BasicInfoScreenState();
+  ConsumerState<DriverBasicInfoScreen> createState() =>
+      _DriverBasicInfoScreenState();
 }
 
-class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
+class _DriverBasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
   XFile? profileImage;
 
   final fnameController = TextEditingController();
   final lnameController = TextEditingController();
 
-  void validateFields() {
+  // Create a reference to the Firebase Storage instance
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  Future<String> uploadImage(XFile image) async {
+    // Generate a unique filename for the image based on the current timestamp
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+    // Create a reference to the location in Firebase Storage where the image will be stored
+    Reference reference = _storage.ref().child('images/$fileName');
+
+    // Upload the image to Firebase Storage using the putFile method
+    UploadTask uploadTask = reference.putFile(io.File(image.path));
+
+    // Wait for the upload to complete and get the download URL of the uploaded image
+    TaskSnapshot taskSnapshot = await uploadTask;
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+
+    return downloadUrl;
+  }
+
+  void validateFields() async {
     if (profileImage == null) {
       debugPrint("i am here");
       showSnackBar(context, "Photo is required");
@@ -32,9 +55,25 @@ class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
     } else if (lnameController.text.isEmpty) {
       showSnackBar(context, "Last name is required");
     } else {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const IDConfirmationScreen(),
-      ));
+      final firestore = ref.read(firestoreProvider);
+
+      final user = ref.read(authProvider).currentUser;
+
+      final collectionRef = firestore.collection('registeredDrivers');
+
+      final docRef = collectionRef.doc(user!.phoneNumber);
+
+      String downloadUrl = await uploadImage(profileImage!);
+
+      docRef.set({
+        'uid': user.uid,
+        'phoneNumber': user.phoneNumber,
+        'firstName': fnameController.text,
+        'lastName': lnameController.text,
+        'profileImage': downloadUrl,
+      });
+
+      navigateTo(context, "/driver_id_confirmation_screen");
     }
   }
 
@@ -53,6 +92,7 @@ class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               // step 1
               Align(
@@ -77,7 +117,6 @@ class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
 
               // form
               Container(
-                height: 550,
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -90,11 +129,16 @@ class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
                     // photo box
                     profileImage == null
                         ? Container(
+                            clipBehavior: Clip.antiAlias,
                             height: 200,
                             width: 202,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               color: const Color(0xff696969),
+                            ),
+                            child: Image.asset(
+                              "assets/images/placeholder-image.jpg",
+                              fit: BoxFit.cover,
                             ),
                           )
                         : Container(
@@ -110,9 +154,7 @@ class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                    const SizedBox(
-                      height: 12,
-                    ),
+                    const SizedBox(height: 12),
 
                     // add image button
                     ElevatedButton(
@@ -126,7 +168,8 @@ class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0)),
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
                         ),
                       ),
                       child: Text(
@@ -139,8 +182,9 @@ class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
                     // first name
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.0),
-                        border: Border.all(color: AppColors.primaryColor),
+                        borderRadius: BorderRadius.circular(12),
+                        color: const Color(0xffFFFFFF),
+                        border: Border.all(color: Colors.grey, width: 0.25),
                       ),
                       child: TextField(
                         controller: fnameController,
@@ -157,8 +201,9 @@ class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
                     // last name
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.0),
-                        border: Border.all(color: AppColors.primaryColor),
+                        borderRadius: BorderRadius.circular(12),
+                        color: const Color(0xffFFFFFF),
+                        border: Border.all(color: Colors.grey, width: 0.25),
                       ),
                       child: TextField(
                         controller: lnameController,
@@ -173,12 +218,11 @@ class _BasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 60.0),
 
               // query banner
               Container(
                 padding: const EdgeInsets.only(left: 10.0),
-                height: 60,
                 width: 400,
                 decoration: BoxDecoration(
                     color: const Color(0xffFFFCCF),

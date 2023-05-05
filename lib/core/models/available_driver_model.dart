@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 class AvailableDriverModel {
+  final String? rideId;
   final String? phoneNumber;
   final String? displayName;
   final String? photoUrl;
@@ -12,6 +13,7 @@ class AvailableDriverModel {
   final int? comments;
 
   AvailableDriverModel({
+    this.rideId,
     this.phoneNumber,
     this.displayName,
     this.photoUrl,
@@ -23,6 +25,7 @@ class AvailableDriverModel {
   });
 
   AvailableDriverModel copyWith({
+    String? rideId,
     String? phoneNumber,
     String? displayName,
     String? photoUrl,
@@ -33,6 +36,7 @@ class AvailableDriverModel {
     int? comments,
   }) {
     return AvailableDriverModel(
+      rideId: rideId ?? this.rideId,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       displayName: displayName ?? this.displayName,
       photoUrl: photoUrl ?? this.photoUrl,
@@ -46,6 +50,7 @@ class AvailableDriverModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'rideId': rideId,
       'phoneNumber': phoneNumber,
       'displayName': displayName,
       'photoUrl': photoUrl,
@@ -59,6 +64,7 @@ class AvailableDriverModel {
 
   factory AvailableDriverModel.fromMap(Map<String, dynamic> map) {
     return AvailableDriverModel(
+      rideId: map['rideId'] ?? "",
       phoneNumber: map['phoneNumber'] ?? "",
       displayName: map['displayName'] ?? "",
       photoUrl: map['photoUrl'] ?? "",
@@ -77,6 +83,6 @@ class AvailableDriverModel {
 
   @override
   String toString() {
-    return 'AvailableDriverModel(phoneNumber: $phoneNumber, displayName: $displayName, photoUrl: $photoUrl, duration: $duration, distance: $distance, fair: $fair, rating: $rating, comments: $comments)';
+    return 'AvailableDriverModel(rideId: $rideId, phoneNumber: $phoneNumber, displayName: $displayName, photoUrl: $photoUrl, duration: $duration, distance: $distance, fair: $fair, rating: $rating, comments: $comments)';
   }
 }

@@ -8,6 +8,7 @@ class UserModel {
   final String? email;
   final String? dateOfBirth;
   final String? gender;
+  final bool? driverProfile;
 
   UserModel({
     required this.uid,
@@ -19,6 +20,7 @@ class UserModel {
     this.email,
     this.dateOfBirth,
     this.gender,
+    this.driverProfile,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,6 +34,7 @@ class UserModel {
       'email': email,
       'dateOfBirth': dateOfBirth,
       'gender': gender,
+      'driverProfile': driverProfile,
     };
   }
 
@@ -46,6 +49,7 @@ class UserModel {
       email: map['email'] as String?,
       dateOfBirth: map['dateOfBirth'] as String?,
       gender: map['gender'] as String?,
+      driverProfile: map['driverProfile'] as bool?,
     );
   }
 
@@ -59,6 +63,7 @@ class UserModel {
     String? email,
     String? dateOfBirth,
     String? gender,
+    bool? driverProfile,
   }) {
     return UserModel(
       uid: uid ?? this.uid,
@@ -70,11 +75,12 @@ class UserModel {
       email: email ?? this.email,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       gender: gender ?? this.gender,
+      driverProfile: driverProfile ?? this.driverProfile,
     );
   }
 
   @override
   String toString() {
-    return 'UserModel(uid: $uid, phoneNumber: $phoneNumber, displayName: $displayName, photoUrl: $photoUrl, mode: $mode, address: $address, email: $email, dateOfBirth: $dateOfBirth, gender: $gender)';
+    return 'UserModel(uid: $uid, phoneNumber: $phoneNumber, displayName: $displayName, photoUrl: $photoUrl, mode: $mode, address: $address, email: $email, dateOfBirth: $dateOfBirth, gender: $gender, driverProfile: $driverProfile)';
   }
 }

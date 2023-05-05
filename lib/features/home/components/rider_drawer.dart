@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shift_lift/core/utils.dart';
+import 'package:shift_lift/features/auth/controller/auth_controller.dart';
 import 'package:top_modal_sheet/top_modal_sheet.dart';
 
 import '../../../utils/app_colors.dart';
 import 'drawer_item_button.dart';
 
-void openDrawer(BuildContext context) async {
+void openDrawer(BuildContext context, WidgetRef ref) async {
+  final user = ref.read(authControllerProvider);
+
   await showTopModalSheet<String?>(
     context,
     Container(
@@ -51,13 +55,13 @@ void openDrawer(BuildContext context) async {
                   label: "Home",
                   onPressed: () {},
                 ),
-                SizedBox(width: 15.0),
+                const SizedBox(width: 15.0),
                 DrawerItemButton(
                   icon: Icons.history,
                   label: "Requests",
                   onPressed: () {},
                 ),
-                SizedBox(width: 15.0),
+                const SizedBox(width: 15.0),
                 DrawerItemButton(
                   icon: Icons.man,
                   label: "Profile",
@@ -66,37 +70,27 @@ void openDrawer(BuildContext context) async {
                     navigateTo(context, '/profile-screen');
                   },
                 ),
-                SizedBox(width: 15.0),
+                const SizedBox(width: 15.0),
                 DrawerItemButton(
                   icon: Icons.help,
                   label: "Help",
                   onPressed: () {},
                 ),
-                SizedBox(width: 15.0),
+                const SizedBox(width: 15.0),
                 DrawerItemButton(
                   icon: Icons.change_circle,
                   label: "Driver",
                   onPressed: () {
                     Navigator.pop(context);
-                    navigateTo(context, '/driver-home-screen');
-                  },
-                ),
-                SizedBox(width: 15.0),
-                DrawerItemButton(
-                  icon: Icons.change_circle,
-                  label: "Driver",
-                  onPressed: () {
-                    Navigator.pop(context);
-                    navigateTo(context, '/driver-home-screen');
-                  },
-                ),
-                SizedBox(width: 15.0),
-                DrawerItemButton(
-                  icon: Icons.change_circle,
-                  label: "Driver",
-                  onPressed: () {
-                    Navigator.pop(context);
-                    navigateTo(context, '/driver-home-screen');
+                    if (user.mode == 'driver') {
+                      debugPrint("navigated to driver registration screen");
+                      navigateTo(context, '/driver-home-screen');
+                      // navigateTo(
+                      //     context, '/driver-vehicle-registration-screen');
+                    } else {
+                      debugPrint("navigated to driver home screen");
+                      navigateTo(context, '/driver-home-screen');
+                    }
                   },
                 ),
               ],

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../utils/commons/app_button.dart';
-import 'basic_info_screen.dart';
+import 'driver_basic_info_screen.dart';
 
 class SelectVehicleScreen extends StatelessWidget {
   const SelectVehicleScreen({super.key});

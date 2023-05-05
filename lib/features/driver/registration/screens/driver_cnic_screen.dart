@@ -39,6 +39,9 @@ class _DriverCNICScreenState extends ConsumerState<DriverCNICScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: () => navigateTo(context, 'driver-id-confirmation-screen'),
+        ),
         backgroundColor: Colors.white,
         title: Text(
           AppText.drivercnic,

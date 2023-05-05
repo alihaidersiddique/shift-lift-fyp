@@ -10,16 +10,18 @@ import '../../../../core/utils/app_image_picker.dart';
 import '../../../../utils/commons/app_button.dart';
 import 'driver_cnic_screen.dart';
 
-class IDConfirmationScreen extends ConsumerStatefulWidget {
-  const IDConfirmationScreen({super.key});
+class DriverIDConfirmationScreen extends ConsumerStatefulWidget {
+  const DriverIDConfirmationScreen({super.key});
 
   @override
-  ConsumerState<IDConfirmationScreen> createState() =>
-      _IDConfirmationScreenState();
+  ConsumerState<DriverIDConfirmationScreen> createState() =>
+      _DriverIDConfirmationScreenState();
 }
 
-class _IDConfirmationScreenState extends ConsumerState<IDConfirmationScreen> {
+class _DriverIDConfirmationScreenState
+    extends ConsumerState<DriverIDConfirmationScreen> {
   XFile? idImage;
+
   void validateFields() {
     if (idImage == null) {
       debugPrint("I am here");
@@ -35,6 +37,9 @@ class _IDConfirmationScreenState extends ConsumerState<IDConfirmationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: () => navigateTo(context, 'driver-basic-info-screen'),
+        ),
         backgroundColor: Colors.white,
         title: Text(
           AppText.idconfi,
@@ -84,9 +89,14 @@ class _IDConfirmationScreenState extends ConsumerState<IDConfirmationScreen> {
                         ? Container(
                             height: 300,
                             width: 250,
+                            clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               color: const Color(0xff696969),
+                            ),
+                            child: Image.asset(
+                              "assets/images/placeholder-image.jpg",
+                              fit: BoxFit.cover,
                             ),
                           )
                         :

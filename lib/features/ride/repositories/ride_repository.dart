@@ -5,6 +5,7 @@ import 'package:fpdart/fpdart.dart';
 
 import '../../../core/failure.dart';
 import '../../../core/models/ride_model.dart';
+import '../../../core/type_defs.dart';
 
 final rideRepositoryProvider =
     Provider<RideRepository>((ref) => RideRepository(ref: ref));
@@ -40,6 +41,7 @@ class RideRepository {
           'dropOffLong': ride.dropOffLong,
           'pickUpLat': ride.pickUpLat,
           'pickUpLong': ride.pickUpLong,
+          'rideDriver': ride.rideDriver,
         },
       );
 
@@ -56,21 +58,32 @@ class RideRepository {
   // update ride status along with driver id
   Future<void> bookRide(String rideId, String driverId) async {
     try {
-      // show the loader
       ref.read(loaderStatusProvider.notifier).update((state) => true);
 
-      // update the `drivers` array
       await _ridesCollection.doc(rideId).update({
         'drivers': FieldValue.arrayUnion([driverId]),
         'rideStatus': describeEnum(RideStatus.booking),
       });
 
-      // hide the loader
       ref.read(loaderStatusProvider.notifier).update((state) => false);
     } catch (error) {
       // handle the error
       ref.read(loaderStatusProvider.notifier).update((state) => false);
       debugPrint('Error booking ride: $error');
+    }
+  }
+
+  FutureVoid acceptDriver(String rideId, String driverPhone) async {
+    try {
+      // update the `drivers` array and return response
+      return right(await _ridesCollection.doc(rideId).update({
+        'rideDriver': driverPhone,
+        'rideStatus': describeEnum(RideStatus.booked),
+      }));
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
     }
   }
 

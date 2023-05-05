@@ -23,17 +23,23 @@ class DriverHomeScreen extends ConsumerWidget {
       backgroundColor: const Color(0xffFBFBFB),
       appBar: AppBar(
         backgroundColor: Colors.white,
+        centerTitle: true,
+        title: const Text(
+          "Available rides...",
+          style: TextStyle(),
+        ),
+        automaticallyImplyLeading: false,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15.0),
             child: IconButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.grey[300]),
+              style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.black87),
               ),
               onPressed: () async => openDrawer(context),
               icon: const Icon(
                 Icons.menu,
-                color: Colors.black,
+                color: Colors.white,
               ),
               color: AppColors.primaryColor,
             ),
@@ -49,47 +55,6 @@ class DriverHomeScreen extends ConsumerWidget {
           final rideController = ref.watch(rideControllerProvider.notifier);
 
           final user = ref.watch(authControllerProvider);
-
-          // return StreamBuilder<Either<Failure, List<RideModel>>>(
-          //   stream: data.getPendingRides(context),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasData) {
-          //       return snapshot.data!.fold(
-          //         (failure) => Text(failure.message),
-          //         (rides) => ListView.builder(
-          //           itemCount: rides.length,
-          //           itemBuilder: (context, index) {
-          //             final ride = rides[index];
-
-          //             final pickUpLatLng =
-          //                 LatLng(ride.pickUpLat!, ride.pickUpLong!);
-
-          //             final dropOffLatLng =
-          //                 LatLng(ride.dropOffLat!, ride.dropOffLong!);
-
-          //             return CustomerRequestWidget(
-          //               amount: 0.00,
-          //               clientName: ride.customerName,
-          //               distance: ride.distance,
-          //               dropOff: ride.dropOffAddress,
-          //               pickUp: ride.pickUpAddress,
-          //               profileImage: ride.customerPhoto,
-          //               time: ride.duration,
-          //               pickUpLatLng: pickUpLatLng,
-          //               dropOffLatLng: dropOffLatLng,
-          //               onDecline: () {},
-          //               onAccept: () {},
-          //             );
-          //           },
-          //         ),
-          //       );
-          //     } else if (snapshot.hasError) {
-          //       return Text('Error: ${snapshot.error}');
-          //     } else {
-          //       return const CircularProgressIndicator();
-          //     }
-          //   },
-          // );
 
           return pendingRides.when(
             data: (rides) {

@@ -89,6 +89,7 @@ final availableDriversProvider =
             debugPrint("reached till here...");
 
             final availableDriver = AvailableDriverModel(
+              rideId: ride.rideId,
               displayName: snapshot.data()!['displayName'],
               photoUrl: snapshot.data()!['photoUrl'],
               phoneNumber: snapshot.data()!['phoneNumber'],

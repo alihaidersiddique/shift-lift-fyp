@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shift_lift/features/driver/registration/screens/vehicle_picture_screen.dart';
+import 'package:shift_lift/features/driver/registration/screens/driver_vehicle_registration_screen.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/utils.dart';
@@ -31,7 +31,7 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
       showSnackBar(context, "Backside of License is required");
     } else {
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const VehiclePictureScreen(),
+        builder: (context) => const DriverVehicleRegistrationScreen(),
       ));
     }
   }
@@ -40,6 +40,9 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: () => navigateTo(context, 'driver-cnic-screen'),
+        ),
         backgroundColor: Colors.white,
         title: Text(
           AppText.driverlisce,
