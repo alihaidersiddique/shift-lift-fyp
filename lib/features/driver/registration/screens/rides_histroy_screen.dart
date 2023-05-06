@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../commons/app_drawer.dart';
 import '../../../../utils/app_colors.dart';
-import 'fare_detail_screen.dart';
+import 'fare_details_screen.dart';
 
 class RidesHistroyScreen extends StatelessWidget {
   const RidesHistroyScreen({super.key});
@@ -30,7 +30,7 @@ class RidesHistroyScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => FareDetailScreen(),
+                builder: (context) => FareDetailsScreen(),
               ),
             );
           },

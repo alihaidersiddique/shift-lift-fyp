@@ -8,14 +8,15 @@ import 'package:path/path.dart' as Path;
 
 import 'package:shift_lift/utils/app_colors.dart';
 
+import '../../commons/app_drawer.dart';
 import '../auth/controller/auth_controller.dart';
 
 final selectedGenderProvider = StateProvider<String>((ref) => "male");
 
 final selectedImageProvider = StateProvider<File?>((ref) => null);
 
-class ProfileScreen extends ConsumerWidget {
-  ProfileScreen({super.key});
+class MyProfileScreen extends ConsumerWidget {
+  MyProfileScreen({super.key});
 
   DateTime? _selectedDate;
 
@@ -123,19 +124,16 @@ class ProfileScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
+        elevation: 2.0,
+        title: const Text("My Profile"),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
+          icon: const Icon(Icons.arrow_back),
           color: AppColors.primaryColor,
         ),
-        title: const Text(
-          "Profile",
-          style: TextStyle(color: Colors.white),
-        ),
+        actions: const [
+          AppDrawer(),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -143,24 +141,36 @@ class ProfileScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // profile image
-            GestureDetector(
-              onTap: () => _showPicker(context, ref),
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () => _showPicker(context, ref),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.primaryColor,
+                        width: 2,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage: NetworkImage(
+                        user.photoUrl ??
+                            "https://firebasestorage.googleapis.com/v0/b/shift-lift-31fd9.appspot.com/o/no-user.png?alt=media&token=2cf37a39-dbe4-4292-8e3c-5c3e80d94a21",
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => _showPicker(context, ref),
+                  icon: const Icon(
+                    Icons.photo_camera_rounded,
                     color: AppColors.primaryColor,
-                    width: 2,
                   ),
-                ),
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundImage: NetworkImage(
-                    user.photoUrl ??
-                        "https://firebasestorage.googleapis.com/v0/b/shift-lift-31fd9.appspot.com/o/no-user.png?alt=media&token=2cf37a39-dbe4-4292-8e3c-5c3e80d94a21",
-                  ),
-                ),
-              ),
+                )
+              ],
             ),
 
             // name field
@@ -268,164 +278,5 @@ class ProfileScreen extends ConsumerWidget {
         ),
       ),
     );
-
-    // return Scaffold(
-    //   body: Stack(
-    //     children: [
-    //       Positioned(
-    //         top: 0,
-    //         left: 0,
-    //         right: 0,
-    //         child: Container(
-    //           height: 150,
-    //           decoration: const BoxDecoration(
-    //             gradient: LinearGradient(
-    //               begin: Alignment.bottomLeft,
-    //               end: Alignment.topCenter,
-    //               colors: [
-    //                 AppColors.primaryColor,
-    //                 AppColors.secondaryColor,
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //       const Positioned(
-    //         top: 40,
-    //         left: 0,
-    //         child: BackButton(),
-    //       ),
-    //       Positioned(
-    //         top: 105,
-    //         right: 20,
-    //         child: Container(
-    //           decoration: BoxDecoration(
-    //             shape: BoxShape.circle,
-    //             border: Border.all(
-    //               color: AppColors.primaryColor,
-    //               width: 1,
-    //             ),
-    //           ),
-    //           child: CircleAvatar(
-    //             radius: 40,
-    //             backgroundImage: NetworkImage(
-    //               user.photoUrl ??
-    //                   "https://firebasestorage.googleapis.com/v0/b/shift-lift-31fd9.appspot.com/o/no-user.png?alt=media&token=2cf37a39-dbe4-4292-8e3c-5c3e80d94a21",
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //       Positioned(
-    //         top: 200,
-    //         left: 0,
-    //         right: 0,
-    //         child: Padding(
-    //           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-    //           child: Column(
-    //             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             children: [
-    //               // name field
-    //               TextFormField(
-    //                 onFieldSubmitted: (value) {
-    //                   ref
-    //                       .read(authControllerProvider.notifier)
-    //                       .updateDisplayName(value, context);
-    //                 },
-    //                 decoration: InputDecoration(
-    //                   hintText: user.displayName,
-    //                   suffixIcon: const Icon(Icons.edit),
-    //                   contentPadding: EdgeInsets.zero,
-    //                 ),
-    //               ),
-    //               const SizedBox(height: 20),
-
-    //               // phone number field
-    //               TextFormField(
-    //                 readOnly: true,
-    //                 decoration: InputDecoration(
-    //                   hintText: user.phoneNumber,
-    //                   suffixIcon: const Icon(Icons.edit_off),
-    //                   contentPadding: EdgeInsets.zero,
-    //                 ),
-    //               ),
-    //               const SizedBox(height: 20),
-
-    //               // address field
-    //               TextFormField(
-    //                 onFieldSubmitted: (value) {
-    //                   ref
-    //                       .read(authControllerProvider.notifier)
-    //                       .updateAddress(value, context);
-    //                 },
-    //                 decoration: InputDecoration(
-    //                   hintText: user.address == "" ? "Address" : user.address,
-    //                   suffixIcon: const Icon(Icons.edit),
-    //                   contentPadding: EdgeInsets.zero,
-    //                 ),
-    //               ),
-    //               const SizedBox(height: 20),
-
-    //               // date of birth field
-    //               TextFormField(
-    //                 onTap: () async {
-    //                   final DateTime? picked = await showDatePicker(
-    //                       context: context,
-    //                       initialDate: _selectedDate ?? DateTime.now(),
-    //                       firstDate: DateTime(1950),
-    //                       lastDate: DateTime(2030));
-    //                   if (picked != null && picked != _selectedDate) {
-    //                     //
-    //                     // ignore: use_build_context_synchronously
-    //                     ref
-    //                         .read(authControllerProvider.notifier)
-    //                         .updateDateOfBirth(
-    //                           "${picked.toLocal().day}/${picked.toLocal().month}/${picked.toLocal().year}",
-    //                           context,
-    //                         );
-    //                   }
-    //                 },
-    //                 decoration: InputDecoration(
-    //                   hintText: user.dateOfBirth == ""
-    //                       ? "Date of Birth"
-    //                       : user.dateOfBirth,
-    //                   suffixIcon: const Icon(Icons.edit),
-    //                   contentPadding: EdgeInsets.zero,
-    //                 ),
-    //               ),
-    //               const SizedBox(height: 20),
-
-    //               // gender field
-    //               DropdownButton<String>(
-    //                 isExpanded: true,
-    //                 value: ref.watch(selectedGenderProvider),
-    //                 onChanged: (String? newValue) {
-    //                   ref
-    //                       .watch(selectedGenderProvider.notifier)
-    //                       .update((state) => newValue!);
-
-    //                   ref
-    //                       .watch(authControllerProvider.notifier)
-    //                       .updateGender(newValue!, context);
-    //                 },
-    //                 hint: const Text("Gender"),
-    //                 style: TextStyle(
-    //                   fontWeight: FontWeight.normal,
-    //                   color: Colors.black.withOpacity(0.7),
-    //                   fontSize: 17,
-    //                 ),
-    //                 items: <String>['male', 'female'].map((String value) {
-    //                   return DropdownMenuItem<String>(
-    //                     value: value,
-    //                     child: Text(value),
-    //                   );
-    //                 }).toList(),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }

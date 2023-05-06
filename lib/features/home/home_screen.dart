@@ -87,8 +87,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var markers = ref.read(markersProvider);
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

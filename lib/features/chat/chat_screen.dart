@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shift_lift/utils/utils.dart';
 
+import '../../commons/app_drawer.dart';
+
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
@@ -8,6 +10,10 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 2.0,
+        actions: const [
+          AppDrawer(),
+        ],
         title: Row(
           children: [
             Container(
@@ -26,10 +32,7 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10.0),
-            Text(
-              "Hamza",
-              style: smHeading,
-            ),
+            const Text("Hasnain Raza"),
           ],
         ),
       ),
@@ -40,13 +43,13 @@ class ChatScreen extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.symmetric(
                 horizontal: 20.0,
-                vertical: 30.0,
+                vertical: 20.0,
               ),
               children: [
                 Center(
                   child: Text(
                     "Tuesday, 18 Oct. 11:02 pm",
-                    style: smClHd.copyWith(fontSize: 14.0),
+                    style: smClHd.copyWith(fontSize: 12.0),
                   ),
                 ),
                 const SizedBox(height: 20.0),
@@ -178,7 +181,7 @@ class UserChatStyle extends StatelessWidget {
             vertical: AppDimensions.height20,
           ),
           decoration: BoxDecoration(
-            color: AppColors.othersChatColor,
+            color: AppColors.primaryColor.withOpacity(0.3),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(AppDimensions.radius15),
               bottomRight: Radius.circular(AppDimensions.radius15),
@@ -188,14 +191,17 @@ class UserChatStyle extends StatelessWidget {
           // width: AppDimensions.width30 * 8,
           child: Text(
             message,
-            style: smClHd.copyWith(fontSize: 16),
+            style: smClHd.copyWith(
+              fontSize: 16,
+              color: Colors.black,
+            ),
           ),
         ),
         SizedBox(width: AppDimensions.width15),
         // other person
         CircleAvatar(
           backgroundImage: const AssetImage(
-            "assets/images/profile.jpg",
+            "assets/images/person.jpg",
           ),
           radius: AppDimensions.radius30,
         ),
@@ -240,10 +246,12 @@ class OthersChatStyle extends StatelessWidget {
               topRight: Radius.circular(AppDimensions.radius15),
             ),
           ),
-          // width: AppDimensions.width30 * 8,
           child: Text(
             message,
-            style: smClHd.copyWith(fontSize: 16),
+            style: smClHd.copyWith(
+              fontSize: 16,
+              color: Colors.black,
+            ),
           ),
         ),
       ],

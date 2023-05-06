@@ -6,10 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shift_lift/features/driver/registration/screens/driver_vehicle_registration_screen.dart';
 
+import '../../../../commons/app_drawer.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/utils.dart';
 import '../../../../core/utils/app_image_picker.dart';
 import '../../../../utils/commons/app_button.dart';
+import '../widgets/form_step_widget.dart';
 
 class DriverLicenseScreen extends ConsumerStatefulWidget {
   const DriverLicenseScreen({super.key});
@@ -40,47 +42,26 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: () => navigateTo(context, 'driver-cnic-screen'),
-        ),
         backgroundColor: Colors.white,
-        title: Text(
-          AppText.driverlisce,
-          style: GoogleFonts.kadwa(color: Colors.black),
-        ),
+        title: const Text(AppText.driverlisce),
+        elevation: 2.0,
+        actions: const [
+          AppDrawer(),
+        ],
       ),
       body: ColoredBox(
         color: const Color(0xffFBFBFB),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
           child: Column(
             children: [
               // step 1
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0,
-                    vertical: 10.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey, width: 0.25),
-                  ),
-                  child: Text(
-                    "4/5",
-                    style: GoogleFonts.kadwa(fontSize: 15),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 15.0),
+              const FormStepWidget(text: "5/6"),
 
               // form
               Container(
-                height: 550,
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: const Color(0xffFFFFFF),
@@ -98,11 +79,16 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
                       // first photo box
                       frontImage == null
                           ? Container(
+                              clipBehavior: Clip.antiAlias,
                               height: 200,
                               width: 300,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: const Color(0xff696969),
+                              ),
+                              child: Image.asset(
+                                "assets/images/placeholder-image.jpg",
+                                fit: BoxFit.cover,
                               ),
                             )
                           : Container(
@@ -142,10 +128,13 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
                           style: GoogleFonts.kadwa(color: Colors.black),
                         ),
                       ),
+
+                      const SizedBox(height: 12),
+
                       const Divider(),
-                      const SizedBox(
-                        height: 12,
-                      ),
+
+                      const SizedBox(height: 12),
+
                       Text(
                         "The Backside of Driver's License",
                         style: GoogleFonts.kadwa(fontSize: 15),
@@ -156,11 +145,16 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
 
                       backImage == null
                           ? Container(
+                              clipBehavior: Clip.antiAlias,
                               height: 200,
                               width: 300,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: const Color(0xff696969),
+                              ),
+                              child: Image.asset(
+                                "assets/images/placeholder-image.jpg",
+                                fit: BoxFit.cover,
                               ),
                             )
                           : Container(
@@ -176,9 +170,7 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                      const SizedBox(
-                        height: 12,
-                      ),
+                      const SizedBox(height: 12),
 
                       // second button
                       ElevatedButton(
@@ -204,11 +196,12 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 20.0),
 
               // query banner
               Container(
                 padding: const EdgeInsets.only(left: 10.0),
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
                 height: 60,
                 width: 400,
                 decoration: BoxDecoration(
@@ -230,6 +223,8 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
                   ),
                 ),
               ),
+
+              const SizedBox(height: 20.0),
             ],
           ),
         ),

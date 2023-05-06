@@ -1,82 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:shift_lift/commons/app_drawer.dart';
 
 import 'package:shift_lift/utils/app_colors.dart';
 import 'package:shift_lift/utils/app_dimensions.dart';
 import 'package:shift_lift/utils/app_text_styles.dart';
 
-import '../../utils/commons/app_button.dart';
-
-class FaqScreen extends StatefulWidget {
-  const FaqScreen({super.key});
+class HelpScreen extends StatefulWidget {
+  const HelpScreen({super.key});
 
   @override
-  State<FaqScreen> createState() => _FaqScreenState();
+  State<HelpScreen> createState() => _HelpScreenState();
 }
 
-class _FaqScreenState extends State<FaqScreen> {
+class _HelpScreenState extends State<HelpScreen> {
   int current = 0;
 
   final PageController _pageController = PageController(initialPage: 0);
 
   List<String> tabBars = ["All", "Get Started", "Ordering & Payments"];
 
-  static const body =
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.";
-
   List<Item> items = [
-    Item(header: "1. How can I book ?", body: body),
-    Item(header: "2. How to set my location?", body: body),
-    Item(header: "3. How to search the driver?", body: body),
-    Item(header: "4. How to filter my search?", body: body),
-    Item(header: "5. How can I add my card?", body: body),
-    Item(header: "6. How to complete payment?", body: body),
+    Item(
+      header: "1. How can I book ride?",
+      body:
+          "Navigate to the home screen, input pickUp location and destination, select vehicle, and tap on the book ride button.",
+    ),
+    Item(
+      header: "2. How to set pick-up location?",
+      body: "body",
+    ),
+    Item(
+      header: "3. How to search the driver?",
+      body: "body",
+    ),
+    Item(
+      header: "4. How to edit my profile?",
+      body: "body",
+    ),
+    Item(
+      header: "5. How can I add my bank card?",
+      body: "body",
+    ),
+    Item(
+      header: "6. How to complain?",
+      body: "body",
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("FAQ"),
-        leading: BackButton(
-          color: Colors.white,
-          // onPressed: () => context.go('/home'),
-        ),
+        title: const Text("Help"),
+        actions: const [
+          AppDrawer(),
+        ],
       ),
       body: Column(
         children: [
-          //
-          SizedBox(height: AppDimensions.height20 * 2),
-          // tab-bars
-          SizedBox(
-            height: AppDimensions.height30 * 2,
-            width: double.infinity,
-            child: ListView.builder(
-              itemCount: tabBars.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(right: AppDimensions.width10),
-                  child: AppButton(
-                    text: tabBars[index],
-                    onTap: () {
-                      setState(() => current = index);
-                      _pageController.animateToPage(
-                        current,
-                        duration: Duration(milliseconds: 400),
-                        curve: Curves.linearToEaseOut,
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-          //
-          SizedBox(height: AppDimensions.height20 * 2),
           // Questions
           Expanded(
             child: PageView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               controller: _pageController,
               onPageChanged: (value) {
                 setState(() => current = value);
@@ -84,7 +69,7 @@ class _FaqScreenState extends State<FaqScreen> {
               children: [
                 // all
                 SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: ExpansionPanelList(
                     expandedHeaderPadding: EdgeInsets.zero,
                     expansionCallback: (index, isExpanded) {
@@ -105,9 +90,10 @@ class _FaqScreenState extends State<FaqScreen> {
                           title: Text(
                             items[index].header.toString(),
                             style: smClHd.copyWith(
+                              fontSize: 18,
                               color: items[index].isExpanded == true
                                   ? Colors.white
-                                  : AppColors.primaryColor,
+                                  : Colors.black,
                             ),
                           ),
                         ),
@@ -119,8 +105,8 @@ class _FaqScreenState extends State<FaqScreen> {
                           ),
                           title: Text(
                             items[index].body.toString(),
-                            style: TextStyle(
-                              fontSize: 18,
+                            style: const TextStyle(
+                              fontSize: 22,
                               color: Colors.white,
                               height: 2,
                             ),
@@ -131,9 +117,9 @@ class _FaqScreenState extends State<FaqScreen> {
                   ),
                 ),
                 // get started
-                SizedBox(),
+                const SizedBox(),
                 // ordering and payments
-                SizedBox(),
+                const SizedBox(),
               ],
             ),
           ),

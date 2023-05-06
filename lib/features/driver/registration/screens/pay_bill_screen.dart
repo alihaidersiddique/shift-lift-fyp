@@ -51,8 +51,9 @@ class _PayBillScreenState extends ConsumerState<PayBillScreen> {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color:
-                            _isPayingWithCard ? Colors.blue : Colors.grey[400]!,
+                        color: _isPayingWithCard
+                            ? AppColors.primaryColor
+                            : Colors.grey[400]!,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -61,7 +62,7 @@ class _PayBillScreenState extends ConsumerState<PayBillScreen> {
                         Icon(
                           Icons.credit_card,
                           color: _isPayingWithCard
-                              ? Colors.blue
+                              ? AppColors.primaryColor
                               : Colors.grey[400],
                         ),
                         const SizedBox(height: 8),
@@ -70,7 +71,7 @@ class _PayBillScreenState extends ConsumerState<PayBillScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: _isPayingWithCard
-                                ? Colors.blue
+                                ? AppColors.primaryColor
                                 : Colors.grey[400],
                           ),
                         ),
@@ -93,8 +94,9 @@ class _PayBillScreenState extends ConsumerState<PayBillScreen> {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color:
-                            _isPayingWithCard ? Colors.grey[400]! : Colors.blue,
+                        color: _isPayingWithCard
+                            ? Colors.grey[400]!
+                            : AppColors.primaryColor,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -105,7 +107,7 @@ class _PayBillScreenState extends ConsumerState<PayBillScreen> {
                           style: TextStyle(
                             color: _isPayingWithCard
                                 ? Colors.grey[400]
-                                : Colors.blue,
+                                : AppColors.primaryColor,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -115,7 +117,7 @@ class _PayBillScreenState extends ConsumerState<PayBillScreen> {
                             fontWeight: FontWeight.bold,
                             color: _isPayingWithCard
                                 ? Colors.grey[400]
-                                : Colors.blue,
+                                : AppColors.primaryColor,
                           ),
                         ),
                       ],

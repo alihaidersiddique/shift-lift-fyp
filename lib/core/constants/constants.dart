@@ -36,7 +36,7 @@ class AppText {
   static const lName = "Last Name";
   static const next = "Next";
   static const idconfi = "ID Confirmation";
-  static const selectvehi = "Select Vehicle";
+  static const selectvehi = "Select Vehicle Type";
   static const driverlisce = "Driver License";
   static const drivercnic = "Driver CNIC";
   static const vehiclepic = "Vehicle Register";

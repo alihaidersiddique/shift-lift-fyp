@@ -5,12 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shift_lift/core/constants/constants.dart';
+import '../../../../commons/app_drawer.dart';
 import '../../../../core/providers/firebase_providers.dart';
 import '../../../../core/utils.dart';
 import '../../../../core/utils/app_image_picker.dart';
 import '../../../../utils/commons/app_button.dart';
 
 import 'dart:io' as io;
+
+import '../widgets/form_step_widget.dart';
 
 class DriverBasicInfoScreen extends ConsumerStatefulWidget {
   const DriverBasicInfoScreen({super.key});
@@ -82,43 +85,26 @@ class _DriverBasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(
-          AppText.basicInfo,
-          style: GoogleFonts.kadwa(color: Colors.black),
-        ),
+        elevation: 2.0,
+        title: const Text(AppText.basicInfo),
+        actions: const [
+          AppDrawer(),
+        ],
       ),
       body: ColoredBox(
         color: const Color(0xffFBFBFB),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               // step 1
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0,
-                    vertical: 10.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey, width: 0.25),
-                  ),
-                  child: Text(
-                    "1/5",
-                    style: GoogleFonts.kadwa(fontSize: 15),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 15.0),
+              const FormStepWidget(text: "2/6"),
 
               // form
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: const Color(0xffFFFFFF),
@@ -223,6 +209,7 @@ class _DriverBasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
               // query banner
               Container(
                 padding: const EdgeInsets.only(left: 10.0),
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
                 width: 400,
                 decoration: BoxDecoration(
                     color: const Color(0xffFFFCCF),

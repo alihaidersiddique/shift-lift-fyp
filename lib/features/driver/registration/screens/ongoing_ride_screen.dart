@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../utils/app_colors.dart';
-import 'fare_detail_screen.dart';
+import 'fare_details_screen.dart';
 
 class OnGoingRideScreen extends StatelessWidget {
   const OnGoingRideScreen({super.key});
@@ -83,7 +83,7 @@ class OnGoingRideScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FareDetailScreen(),
+                      builder: (context) => const FareDetailsScreen(),
                     ),
                   );
                 },

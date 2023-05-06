@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shift_lift/commons/app_drawer.dart';
+import 'package:shift_lift/features/driver/registration/widgets/form_step_widget.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/utils.dart';
@@ -37,47 +39,26 @@ class _DriverIDConfirmationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: () => navigateTo(context, 'driver-basic-info-screen'),
-        ),
         backgroundColor: Colors.white,
-        title: Text(
-          AppText.idconfi,
-          style: GoogleFonts.kadwa(color: Colors.black),
-        ),
+        elevation: 2.0,
+        title: const Text(AppText.idconfi),
+        actions: const [
+          AppDrawer(),
+        ],
       ),
       body: ColoredBox(
         color: const Color(0xffFBFBFB),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
           child: Column(
             children: [
               // step 1
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0,
-                    vertical: 10.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey, width: 0.25),
-                  ),
-                  child: Text(
-                    "2/5",
-                    style: GoogleFonts.kadwa(fontSize: 15),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 15.0),
+              const FormStepWidget(text: "3/6"),
 
               // form
               Container(
-                height: 550,
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: const Color(0xffFFFFFF),
@@ -87,8 +68,6 @@ class _DriverIDConfirmationScreenState
                   children: [
                     idImage == null
                         ? Container(
-                            height: 300,
-                            width: 250,
                             clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
@@ -103,8 +82,6 @@ class _DriverIDConfirmationScreenState
                         // photo box
                         Container(
                             clipBehavior: Clip.antiAlias,
-                            height: 300,
-                            width: 250,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               color: const Color(0xff696969),
@@ -114,9 +91,7 @@ class _DriverIDConfirmationScreenState
                               fit: BoxFit.cover,
                             ),
                           ),
-                    const SizedBox(
-                      height: 12,
-                    ),
+                    const SizedBox(height: 12),
 
                     // add image button
                     ElevatedButton(
@@ -141,11 +116,12 @@ class _DriverIDConfirmationScreenState
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 20.0),
 
               // query banner
               Container(
                 padding: const EdgeInsets.only(left: 10.0),
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
                 height: 60,
                 width: 400,
                 decoration: BoxDecoration(
