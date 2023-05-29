@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shift_lift/utils/utils.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/providers/firebase_providers.dart';
-import '../../../core/utils.dart';
 import '../../../utils/app_colors.dart';
 import 'widgets/mode_button_widget.dart';
 
@@ -23,10 +23,12 @@ class ModeScreen extends ConsumerWidget {
 
     if (mode == "driver") {
       docRef.update({'mode': mode});
-      navigateTo(context, '/driver-registration-screen');
+      // navigateTo(context, '/driver-vehicle-selection-screen');
+      Get.toNamed("/driver-vehicle-selection-screen");
     } else {
       docRef.update({'mode': mode});
-      navigateTo(context, '/home-screen');
+      // navigateTo(context, '/home-screen');
+      Get.toNamed("/home-screen");
     }
   }
 

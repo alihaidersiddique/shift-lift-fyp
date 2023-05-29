@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shift_lift/core/models/available_driver_model.dart';
-import 'package:shift_lift/core/utils.dart';
 import 'package:square_progress_bar/square_progress_bar.dart';
 import '../../driver/home/controller/home_controller.dart';
 import '../../map/controller/map_controller.dart';

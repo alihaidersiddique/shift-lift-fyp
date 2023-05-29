@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/utils.dart';
+import 'package:get/route_manager.dart';
 import '../../../utils/utils.dart';
 import '../../screens.dart';
 
@@ -13,7 +13,9 @@ class BookingDetailsScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           TextButton(
-            onPressed: () => navigateTo(context, '/drive-request-screen'),
+            onPressed: () {
+              Get.toNamed("/drive-request-screen");
+            },
             child: Text(
               "Cancel",
               style: smClHd.copyWith(color: Colors.white, fontSize: 18),

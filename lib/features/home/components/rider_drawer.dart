@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/route_manager.dart';
 import 'package:shift_lift/core/utils.dart';
 import 'package:shift_lift/features/auth/controller/auth_controller.dart';
 import 'package:top_modal_sheet/top_modal_sheet.dart';
@@ -67,7 +68,7 @@ void openDrawer(BuildContext context, WidgetRef ref) async {
                   label: "Profile",
                   onPressed: () {
                     Navigator.pop(context);
-                    navigateTo(context, '/profile-screen');
+                    Get.toNamed("/driver-earnings-withdraw-history-screen");
                   },
                 ),
                 const SizedBox(width: 15.0),
@@ -84,12 +85,10 @@ void openDrawer(BuildContext context, WidgetRef ref) async {
                     Navigator.pop(context);
                     if (user.mode == 'driver') {
                       debugPrint("navigated to driver registration screen");
-                      navigateTo(context, '/driver-home-screen');
-                      // navigateTo(
-                      //     context, '/driver-vehicle-registration-screen');
+                      Get.toNamed("/driver-home-screen");
                     } else {
                       debugPrint("navigated to driver home screen");
-                      navigateTo(context, '/driver-home-screen');
+                      Get.toNamed("/driver-home-screen");
                     }
                   },
                 ),

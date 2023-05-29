@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class SnackbarUtil {
   static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackbar(
@@ -56,6 +55,6 @@ void showSnackBar(BuildContext context, String text) {
     );
 }
 
-void navigateTo(BuildContext context, String page) {
-  context.go(page);
-}
+// void navigateTo(BuildContext context, String page) {
+//   GoRouter.of(context).go(page);
+// }

@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/route_manager.dart';
 import 'package:shift_lift/features/auth/controller/auth_controller.dart';
-import 'core/models/user_model.dart';
 import 'core/utils/app_routes.dart';
 import 'firebase_options.dart';
 import 'utils/app_pallette.dart';
@@ -11,7 +11,7 @@ import 'utils/app_pallette.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  FirebaseAppCheck.instance.activate();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -52,7 +52,7 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -63,7 +63,8 @@ class _MyAppState extends ConsumerState<MyApp> {
         ),
         useMaterial3: true,
       ),
-      routerConfig: appRoutes,
+      initialRoute: '/',
+      getPages: appRoutes,
     );
   }
 }

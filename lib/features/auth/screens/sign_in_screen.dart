@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shift_lift/core/constants/constants.dart';
 import 'package:shift_lift/core/utils.dart';
@@ -17,18 +18,19 @@ class SignInScreen extends ConsumerStatefulWidget {
 class _SignInScreenState extends ConsumerState<SignInScreen> {
   TextEditingController phoneController = TextEditingController();
 
-  void sendCode() {
+  void sendCode() async {
     if (phoneController.text.isEmpty) {
       showSnackBar(context, "Please enter mobile number");
     } else if (phoneController.text.length < 10) {
       showSnackBar(context, "Invalid mobile number");
     } else {
-      ref.read(authControllerProvider.notifier).signInWithPhone(
+      await ref.read(authControllerProvider.notifier).signInWithPhone(
             context,
             AppText.countryCode + phoneController.text,
           );
 
-      navigateTo(context, '/otp-screen');
+      // navigateTo(context, '/otp-screen');
+      Get.toNamed("/otp-screen");
     }
   }
 

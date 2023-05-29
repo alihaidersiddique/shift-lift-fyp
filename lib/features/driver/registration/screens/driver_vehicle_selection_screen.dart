@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../commons/app_drawer.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../core/providers/firebase_providers.dart';
+import '../../../../core/utils.dart';
 import '../../../../utils/commons/app_button.dart';
 import '../../../home/components/vehicle_tile_widget.dart';
+import '../../../home/home_screen.dart';
+import '../controllers/registration_controller.dart';
 import '../widgets/form_step_widget.dart';
-import 'driver_basic_info_screen.dart';
-
-final selectedTileProvider = StateProvider<int>((ref) => -1);
 
 class DriverVehicleSelectionScreen extends ConsumerStatefulWidget {
-  DriverVehicleSelectionScreen({super.key});
+  const DriverVehicleSelectionScreen({super.key});
 
   @override
   ConsumerState<DriverVehicleSelectionScreen> createState() =>
@@ -27,25 +27,34 @@ class _DriverVehicleSelectionScreenState
 
   final TextEditingController _rideTypeController = TextEditingController();
 
+  void validatePage() async {
+    if (_rideTypeController.text.isEmpty) {
+      debugPrint("i am here");
+      showSnackBar(context, "Select vehicle type");
+    } else {
+      final user = ref.read(authProvider).currentUser;
+
+      ref.read(registrationControllerProvider).selectVehicleType(
+            uid: user!.uid,
+            vehicleType: _rideTypeController.text,
+            context: context,
+          );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: const BackButton(),
         elevation: 2.0,
-        backgroundColor: Colors.white,
-        title: Text(
-          AppText.selectvehi,
-          style: GoogleFonts.kadwa(color: Colors.black),
-        ),
-        actions: const [
-          AppDrawer(),
-        ],
+        title: const Text(AppText.selectvehi),
       ),
       body: Column(
         children: [
           // step 1
           const FormStepWidget(text: "1/6"),
-
           // // form
           verticalSlider(ref),
         ],
@@ -53,11 +62,7 @@ class _DriverVehicleSelectionScreenState
       bottomNavigationBar: AppButton(
         text: AppText.next,
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const DriverBasicInfoScreen(),
-            ),
-          );
+          validatePage();
         },
       ),
     );

@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shift_lift/features/driver/registration/screens/driver_vehicle_registration_screen.dart';
+import 'package:shift_lift/features/driver/registration/controllers/registration_controller.dart';
 
-import '../../../../commons/app_drawer.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/utils.dart';
 import '../../../../core/utils/app_image_picker.dart';
@@ -32,9 +31,11 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
     } else if (backImage == null) {
       showSnackBar(context, "Backside of License is required");
     } else {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const DriverVehicleRegistrationScreen(),
-      ));
+      ref.read(registrationControllerProvider).driverLicense(
+            licenseFrontsideImage: frontImage!,
+            licenseBacksideImage: backImage!,
+            context: context,
+          );
     }
   }
 
@@ -42,12 +43,10 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: const BackButton(),
         title: const Text(AppText.driverlisce),
         elevation: 2.0,
-        actions: const [
-          AppDrawer(),
-        ],
       ),
       body: ColoredBox(
         color: const Color(0xffFBFBFB),
@@ -198,33 +197,33 @@ class _DriverLicenseScreenState extends ConsumerState<DriverLicenseScreen> {
               ),
               const SizedBox(height: 20.0),
 
-              // query banner
-              Container(
-                padding: const EdgeInsets.only(left: 10.0),
-                margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                height: 60,
-                width: 400,
-                decoration: BoxDecoration(
-                    color: const Color(0xffFFFCCF),
-                    borderRadius: BorderRadius.circular(12)),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'For queries, please contact our\n ',
-                    style: GoogleFonts.kadwa(color: Colors.black, fontSize: 15),
-                    children: const <TextSpan>[
-                      TextSpan(
-                        text: 'customer support',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // // query banner
+              // Container(
+              //   padding: const EdgeInsets.only(left: 10.0),
+              //   margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              //   height: 60,
+              //   width: 400,
+              //   decoration: BoxDecoration(
+              //       color: const Color(0xffFFFCCF),
+              //       borderRadius: BorderRadius.circular(12)),
+              //   child: RichText(
+              //     text: TextSpan(
+              //       text: 'For queries, please contact our\n ',
+              //       style: GoogleFonts.kadwa(color: Colors.black, fontSize: 15),
+              //       children: const <TextSpan>[
+              //         TextSpan(
+              //           text: 'customer support',
+              //           style: TextStyle(
+              //             fontWeight: FontWeight.bold,
+              //             color: Colors.green,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
 
-              const SizedBox(height: 20.0),
+              // const SizedBox(height: 20.0),
             ],
           ),
         ),

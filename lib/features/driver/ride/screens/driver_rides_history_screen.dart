@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../commons/app_drawer.dart';
 import '../../../../utils/app_colors.dart';
-import 'fare_details_screen.dart';
+import '../../home/components/driver_drawer.dart';
+import '../../registration/screens/fare_details_screen.dart';
 
-class RidesHistroyScreen extends StatelessWidget {
-  const RidesHistroyScreen({super.key});
+class DriverRidesHistroyScreen extends StatelessWidget {
+  const DriverRidesHistroyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 2.0,
         title: const Text("Rides Histroy"),
         actions: const [
-          AppDrawer(),
+          DriverDrawerWidget(),
         ],
       ),
       body: ListView.builder(

@@ -30,20 +30,28 @@ class AuthRepository {
 
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  Future<void> signInWithPhone(
+  FutureVoid signInWithPhone(
     String phoneNumber,
     Function(AuthCredential) verificationCompletedCallback,
     Function(FirebaseAuthException) verificationFailedCallback,
     Function(String, int?) codeSentCallback,
     Function(String) codeAutoRetrievalTimeoutCallback,
   ) async {
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: verificationCompletedCallback,
-      verificationFailed: verificationFailedCallback,
-      codeSent: codeSentCallback,
-      codeAutoRetrievalTimeout: codeAutoRetrievalTimeoutCallback,
-    );
+    try {
+      return right(
+        await _auth.verifyPhoneNumber(
+          phoneNumber: phoneNumber,
+          verificationCompleted: verificationCompletedCallback,
+          verificationFailed: verificationFailedCallback,
+          codeSent: codeSentCallback,
+          codeAutoRetrievalTimeout: codeAutoRetrievalTimeoutCallback,
+        ),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
   }
 
   Future<void> saveUserData(User user) async {

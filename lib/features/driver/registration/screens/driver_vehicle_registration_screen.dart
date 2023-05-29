@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shift_lift/features/driver/registration/controllers/registration_controller.dart';
 
 import '../../../../commons/app_drawer.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/utils.dart';
 import '../../../../core/utils/app_image_picker.dart';
 import '../../../../utils/commons/app_button.dart';
-import '../../home/screens/driver_home_screen.dart';
 import '../widgets/form_step_widget.dart';
+
+import 'dart:io' as io;
 
 class DriverVehicleRegistrationScreen extends ConsumerStatefulWidget {
   const DriverVehicleRegistrationScreen({super.key});
@@ -23,23 +25,26 @@ class DriverVehicleRegistrationScreen extends ConsumerStatefulWidget {
 
 class _VehiclePictureScreenState
     extends ConsumerState<DriverVehicleRegistrationScreen> {
-  XFile? frontImage;
-  XFile? backImage;
+  XFile? vehicleImage;
+  XFile? vehicleRegCertFrontImage;
 
   bool isActivate = false;
 
-  void validateFields() {
-    if (frontImage == null) {
+  void validateFields() async {
+    if (vehicleImage == null) {
       debugPrint("i am here");
-      showSnackBar(context, "Frontside of Vehicle is required");
-    } else if (backImage == null) {
+      Future.delayed(Duration.zero, () {
+        showSnackBar(context, "Frontside of Vehicle is required");
+      });
+    } else if (vehicleRegCertFrontImage == null) {
       showSnackBar(context, "Backside of Vehicle Registration is required");
     } else {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const DriverHomeScreen(),
-        ),
-      );
+      ref.read(registrationControllerProvider).vehicleRegistration(
+            vehicleImage: vehicleImage!,
+            vehicleRegistrationCertificateFrontsideImage:
+                vehicleRegCertFrontImage!,
+            context: context,
+          );
     }
   }
 
@@ -47,12 +52,10 @@ class _VehiclePictureScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: const BackButton(),
         title: const Text(AppText.vehicleregis),
         elevation: 2.0,
-        actions: const [
-          AppDrawer(),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -79,7 +82,7 @@ class _VehiclePictureScreenState
                     ),
                     const SizedBox(height: 12),
                     // photo box
-                    frontImage == null
+                    vehicleImage == null
                         ? Container(
                             clipBehavior: Clip.antiAlias,
                             height: 200,
@@ -102,7 +105,7 @@ class _VehiclePictureScreenState
                               color: const Color(0xff696969),
                             ),
                             child: Image.file(
-                              File(frontImage!.path),
+                              File(vehicleImage!.path),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -111,7 +114,7 @@ class _VehiclePictureScreenState
                     // add image button
                     ElevatedButton(
                       onPressed: () async {
-                        frontImage = await appPickImage();
+                        vehicleImage = await appPickImage();
                         setState(() {});
                       },
                       style: ButtonStyle(
@@ -141,7 +144,7 @@ class _VehiclePictureScreenState
                     ),
                     const SizedBox(height: 12),
                     // fisrt photo box
-                    backImage == null
+                    vehicleRegCertFrontImage == null
                         ? Container(
                             clipBehavior: Clip.antiAlias,
                             height: 200,
@@ -164,7 +167,7 @@ class _VehiclePictureScreenState
                               color: const Color(0xff696969),
                             ),
                             child: Image.file(
-                              File(backImage!.path),
+                              File(vehicleRegCertFrontImage!.path),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -174,7 +177,7 @@ class _VehiclePictureScreenState
                     // add image button
                     ElevatedButton(
                       onPressed: () async {
-                        backImage = await appPickImage();
+                        vehicleRegCertFrontImage = await appPickImage();
                         setState(() {});
                       },
                       style: ButtonStyle(
@@ -199,32 +202,32 @@ class _VehiclePictureScreenState
             const SizedBox(height: 20.0),
 
             // query banner
-            Container(
-              padding: const EdgeInsets.only(left: 10.0),
-              height: 60,
-              width: 400,
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: BoxDecoration(
-                  color: const Color(0xffFFFCCF),
-                  borderRadius: BorderRadius.circular(12)),
-              child: RichText(
-                text: TextSpan(
-                  text: 'For queries, please contact our\n ',
-                  style: GoogleFonts.kadwa(color: Colors.black, fontSize: 15),
-                  children: const <TextSpan>[
-                    TextSpan(
-                      text: 'customer support',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Container(
+            //   padding: const EdgeInsets.only(left: 10.0),
+            //   height: 60,
+            //   width: 400,
+            //   margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            //   decoration: BoxDecoration(
+            //       color: const Color(0xffFFFCCF),
+            //       borderRadius: BorderRadius.circular(12)),
+            //   child: RichText(
+            //     text: TextSpan(
+            //       text: 'For queries, please contact our\n ',
+            //       style: GoogleFonts.kadwa(color: Colors.black, fontSize: 15),
+            //       children: const <TextSpan>[
+            //         TextSpan(
+            //           text: 'customer support',
+            //           style: TextStyle(
+            //             fontWeight: FontWeight.bold,
+            //             color: Colors.green,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
 
-            const SizedBox(height: 20.0),
+            // const SizedBox(height: 20.0),
           ],
         ),
       ),

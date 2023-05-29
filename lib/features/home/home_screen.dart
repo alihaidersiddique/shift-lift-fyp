@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show Uint8List;
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart' as geo_coding;
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -92,7 +93,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         automaticallyImplyLeading: false,
         iconTheme: const IconThemeData(color: Colors.white, size: 22),
         title: TextButton(
-          onPressed: () => navigateTo(context, '/available-drivers-screen'),
+          onPressed: () {
+            Get.toNamed("/available-drivers-screen");
+          },
           child: const Text(
             "Requested ride...",
             style: TextStyle(color: Colors.green, fontSize: 18.0),

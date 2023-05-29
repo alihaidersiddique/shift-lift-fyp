@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../utils/app_colors.dart';
+
 class DrawerItemButton extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -22,7 +24,7 @@ class DrawerItemButton extends StatelessWidget {
             height: 40,
             width: 50,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.secondaryColor,
               shape: BoxShape.circle,
               border: Border.all(color: Colors.grey[300]!),
             ),

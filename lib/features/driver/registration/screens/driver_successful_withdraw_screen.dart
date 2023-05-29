@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../commons/app_drawer.dart';
 
-class DriverEarningsSuccessfulWithdrawScreen extends StatelessWidget {
-  const DriverEarningsSuccessfulWithdrawScreen({super.key});
+class DriverSuccessfulWithdrawScreen extends StatelessWidget {
+  const DriverSuccessfulWithdrawScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

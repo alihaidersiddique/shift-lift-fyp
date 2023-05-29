@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shift_lift/core/constants/constants.dart';
 import '../../../core/providers/firebase_providers.dart';
@@ -31,7 +32,8 @@ class _NameScreenState extends ConsumerState<NameScreen> {
       docRef.update({
         'displayName': nameController.text,
       });
-      navigateTo(context, '/mode-screen');
+      // navigateTo(context, '/mode-screen');
+      Get.toNamed("/mode-screen");
     }
   }
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shift_lift/features/driver/home/components/driver_drawer.dart';
 
 import '../../../../commons/app_drawer.dart';
 
-class DriverEarningsWithdrawHistoryScreen extends StatelessWidget {
-  DriverEarningsWithdrawHistoryScreen({super.key});
+class DriverWithdrawalsScreen extends StatelessWidget {
+  DriverWithdrawalsScreen({super.key});
 
   final List<Withdrawal> withdrawalHistory = [
     Withdrawal(
@@ -48,10 +49,10 @@ class DriverEarningsWithdrawHistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Withdrawal History'),
+        title: const Text('Withdrawals'),
         elevation: 2.0,
         actions: const [
-          AppDrawer(),
+          DriverDrawerWidget(),
         ],
       ),
       body: ListView.separated(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/route_manager.dart';
 
 import '../../../core/models/ride_model.dart';
 import '../../../core/utils.dart';
@@ -107,7 +108,7 @@ class RideController extends StateNotifier<RideModel> {
 
           Navigator.pop(context);
           showSnackBar(context, "Your ride has been requested");
-          navigateTo(context, '/available-drivers-screen');
+          Get.toNamed("/available-drivers-screen");
         },
       );
     } catch (e) {
@@ -161,7 +162,7 @@ class RideController extends StateNotifier<RideModel> {
         (r) {
           state = state.copyWith(rideStatus: RideStatus.booked);
           Navigator.pop(context);
-          navigateTo(context, "/booked-ride-screen");
+          Get.toNamed("/booked-ride-screen");
           showSnackBar(context, "Your ride is booked!");
         },
       );

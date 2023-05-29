@@ -10,8 +10,8 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/utils.dart';
 import '../../../../core/utils/app_image_picker.dart';
 import '../../../../utils/commons/app_button.dart';
+import '../controllers/registration_controller.dart';
 import '../widgets/form_step_widget.dart';
-import 'driver_license_screen.dart';
 
 class DriverCNICScreen extends ConsumerStatefulWidget {
   const DriverCNICScreen({super.key});
@@ -31,9 +31,11 @@ class _DriverCNICScreenState extends ConsumerState<DriverCNICScreen> {
     } else if (backImage == null) {
       showSnackBar(context, "Backside of CNIC is required");
     } else {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const DriverLicenseScreen(),
-      ));
+      ref.read(registrationControllerProvider).driverCNIC(
+            cnicFrontsideImage: frontImage!,
+            cnicBacksideImage: backImage!,
+            context: context,
+          );
     }
   }
 
@@ -41,12 +43,10 @@ class _DriverCNICScreenState extends ConsumerState<DriverCNICScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: const BackButton(),
         title: const Text(AppText.drivercnic),
         elevation: 2.0,
-        actions: const [
-          AppDrawer(),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -189,32 +189,32 @@ class _DriverCNICScreenState extends ConsumerState<DriverCNICScreen> {
             const SizedBox(height: 20.0),
 
             // query banner
-            Container(
-              padding: const EdgeInsets.only(left: 10.0),
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              height: 60,
-              width: 400,
-              decoration: BoxDecoration(
-                  color: const Color(0xffFFFCCF),
-                  borderRadius: BorderRadius.circular(12)),
-              child: RichText(
-                text: TextSpan(
-                  text: 'For queries, please contact our\n ',
-                  style: GoogleFonts.kadwa(color: Colors.black, fontSize: 15),
-                  children: const <TextSpan>[
-                    TextSpan(
-                      text: 'customer support',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Container(
+            //   padding: const EdgeInsets.only(left: 10.0),
+            //   margin: const EdgeInsets.symmetric(horizontal: 20),
+            //   height: 60,
+            //   width: 400,
+            //   decoration: BoxDecoration(
+            //       color: const Color(0xffFFFCCF),
+            //       borderRadius: BorderRadius.circular(12)),
+            //   child: RichText(
+            //     text: TextSpan(
+            //       text: 'For queries, please contact our\n ',
+            //       style: GoogleFonts.kadwa(color: Colors.black, fontSize: 15),
+            //       children: const <TextSpan>[
+            //         TextSpan(
+            //           text: 'customer support',
+            //           style: TextStyle(
+            //             fontWeight: FontWeight.bold,
+            //             color: Colors.green,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
 
-            const SizedBox(height: 20.0),
+            // const SizedBox(height: 20.0),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/route_manager.dart';
 import '../../../core/models/user_model.dart';
 import '../../../core/providers/firebase_providers.dart';
 import '../../../core/utils.dart';
@@ -33,35 +34,51 @@ class AuthController extends StateNotifier<UserModel> {
     BuildContext context,
     String phoneNumber,
   ) async {
-    await _authRepository.signInWithPhone(
-      phoneNumber,
-      (phoneAuthCredential) async {
-        final auth = _ref.read(authProvider);
+    try {
+      showCircularProgressIndicator(context);
 
-        UserCredential userCredential =
-            await auth.signInWithCredential(phoneAuthCredential);
+      final res = await _authRepository.signInWithPhone(
+        phoneNumber,
+        (phoneAuthCredential) async {
+          final auth = _ref.read(authProvider);
 
-        await _authRepository.saveUserData(userCredential.user!);
+          UserCredential userCredential =
+              await auth.signInWithCredential(phoneAuthCredential);
 
-        navigateTo(context, '/name-screen');
-      },
-      (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          String error = 'The provided phone number is not valid.';
-          debugPrint(error);
-          showSnackBar(context, error);
-        }
+          await _authRepository.saveUserData(userCredential.user!);
 
-        // Handle other errors
-      },
-      (verificationId, forceResendingToken) async {
-        //Handle code sent
-        verify = verificationId;
-      },
-      (verificationId) {
-        // Handle code auto-retrieval timeout
-      },
-    );
+          Get.toNamed("/name-screen");
+        },
+        (FirebaseAuthException e) {
+          if (e.code == 'invalid-phone-number') {
+            String error = 'The provided phone number is not valid.';
+            debugPrint(error);
+            showSnackBar(context, error);
+          }
+
+          // Handle other errors
+        },
+        (verificationId, forceResendingToken) async {
+          //Handle code sent
+          verify = verificationId;
+        },
+        (verificationId) {
+          // Handle code auto-retrieval timeout
+        },
+      );
+
+      res.fold(
+        (l) {
+          Navigator.pop(context);
+          showSnackBar(context, l.message);
+        },
+        (r) {
+          Navigator.pop(context);
+        },
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   Future<UserModel> getUserData(String phoneNumber) async {

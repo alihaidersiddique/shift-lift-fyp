@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../utils/app_colors.dart';
 import 'fare_details_screen.dart';
 
-class OnGoingRideScreen extends StatelessWidget {
-  const OnGoingRideScreen({super.key});
+class DriverOnGoingRideScreen extends StatelessWidget {
+  const DriverOnGoingRideScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

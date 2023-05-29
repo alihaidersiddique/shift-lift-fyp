@@ -1,18 +1,18 @@
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shift_lift/core/constants/constants.dart';
 import '../../../../commons/app_drawer.dart';
-import '../../../../core/providers/firebase_providers.dart';
+import '../../../../core/providers/driver_registration_state_provider.dart';
 import '../../../../core/utils.dart';
 import '../../../../core/utils/app_image_picker.dart';
 import '../../../../utils/commons/app_button.dart';
 
 import 'dart:io' as io;
 
+import '../controllers/registration_controller.dart';
 import '../widgets/form_step_widget.dart';
 
 class DriverBasicInfoScreen extends ConsumerStatefulWidget {
@@ -29,26 +29,6 @@ class _DriverBasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
   final fnameController = TextEditingController();
   final lnameController = TextEditingController();
 
-  // Create a reference to the Firebase Storage instance
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-
-  Future<String> uploadImage(XFile image) async {
-    // Generate a unique filename for the image based on the current timestamp
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-
-    // Create a reference to the location in Firebase Storage where the image will be stored
-    Reference reference = _storage.ref().child('images/$fileName');
-
-    // Upload the image to Firebase Storage using the putFile method
-    UploadTask uploadTask = reference.putFile(io.File(image.path));
-
-    // Wait for the upload to complete and get the download URL of the uploaded image
-    TaskSnapshot taskSnapshot = await uploadTask;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-
-    return downloadUrl;
-  }
-
   void validateFields() async {
     if (profileImage == null) {
       debugPrint("i am here");
@@ -58,25 +38,12 @@ class _DriverBasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
     } else if (lnameController.text.isEmpty) {
       showSnackBar(context, "Last name is required");
     } else {
-      final firestore = ref.read(firestoreProvider);
-
-      final user = ref.read(authProvider).currentUser;
-
-      final collectionRef = firestore.collection('registeredDrivers');
-
-      final docRef = collectionRef.doc(user!.phoneNumber);
-
-      String downloadUrl = await uploadImage(profileImage!);
-
-      docRef.set({
-        'uid': user.uid,
-        'phoneNumber': user.phoneNumber,
-        'firstName': fnameController.text,
-        'lastName': lnameController.text,
-        'profileImage': downloadUrl,
-      });
-
-      navigateTo(context, "/driver_id_confirmation_screen");
+      ref.read(registrationControllerProvider).addBasicInfo(
+            firstName: fnameController.text,
+            lastName: lnameController.text,
+            photo: profileImage!,
+            context: context,
+          );
     }
   }
 
@@ -84,12 +51,10 @@ class _DriverBasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        leading: const BackButton(),
         elevation: 2.0,
         title: const Text(AppText.basicInfo),
-        actions: const [
-          AppDrawer(),
-        ],
       ),
       body: ColoredBox(
         color: const Color(0xffFBFBFB),
@@ -206,30 +171,30 @@ class _DriverBasicInfoScreenState extends ConsumerState<DriverBasicInfoScreen> {
               ),
               const SizedBox(height: 60.0),
 
-              // query banner
-              Container(
-                padding: const EdgeInsets.only(left: 10.0),
-                margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                width: 400,
-                decoration: BoxDecoration(
-                    color: const Color(0xffFFFCCF),
-                    borderRadius: BorderRadius.circular(12)),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'For queries, please contact our\n ',
-                    style: GoogleFonts.kadwa(color: Colors.black, fontSize: 15),
-                    children: const <TextSpan>[
-                      TextSpan(
-                        text: 'customer support',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // // query banner
+              // Container(
+              //   padding: const EdgeInsets.only(left: 10.0),
+              //   margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              //   width: 400,
+              //   decoration: BoxDecoration(
+              //       color: const Color(0xffFFFCCF),
+              //       borderRadius: BorderRadius.circular(12)),
+              //   child: RichText(
+              //     text: TextSpan(
+              //       text: 'For queries, please contact our\n ',
+              //       style: GoogleFonts.kadwa(color: Colors.black, fontSize: 15),
+              //       children: const <TextSpan>[
+              //         TextSpan(
+              //           text: 'customer support',
+              //           style: TextStyle(
+              //             fontWeight: FontWeight.bold,
+              //             color: Colors.green,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

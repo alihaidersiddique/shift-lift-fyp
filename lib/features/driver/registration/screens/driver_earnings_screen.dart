@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shift_lift/commons/app_drawer.dart';
+import 'package:get/route_manager.dart';
 import 'package:shift_lift/core/utils.dart';
-import 'package:shift_lift/utils/utils.dart';
+
+import '../../home/components/driver_drawer.dart';
 
 class DriverEarningsScreen extends StatelessWidget {
   const DriverEarningsScreen({super.key});
@@ -13,7 +14,7 @@ class DriverEarningsScreen extends StatelessWidget {
         title: const Text('Earnings'),
         elevation: 2.0,
         actions: const [
-          AppDrawer(),
+          DriverDrawerWidget(),
         ],
       ),
       body: Center(
@@ -47,8 +48,7 @@ class DriverEarningsScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                navigateTo(
-                    context, '/driver-earning-successful-withdraw-screen');
+                Get.toNamed("/driver-earning-successful-withdraw-screen");
               },
             ),
             const SizedBox(height: 20),
@@ -61,7 +61,7 @@ class DriverEarningsScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                navigateTo(context, '/driver-earnings-withdraw-history-screen');
+                Get.toNamed("/driver-earnings-withdraw-history-screen");
               },
             ),
           ],
