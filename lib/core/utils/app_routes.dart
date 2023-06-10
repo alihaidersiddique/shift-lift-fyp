@@ -10,6 +10,7 @@ import 'package:shift_lift/features/driver/registration/screens/driver_vehicle_s
 import 'package:shift_lift/features/driver/registration/screens/driver_ongoing_ride_screen.dart';
 import 'package:shift_lift/features/driver/registration/screens/registration_in_process_screen.dart';
 import 'package:shift_lift/features/driver/ride/screens/driver_rides_history_screen.dart';
+import 'package:shift_lift/features/help/help_screen.dart';
 import 'package:shift_lift/features/screens.dart';
 
 import '../../features/auth/screens/otp_screen.dart';
@@ -70,8 +71,8 @@ final appRoutes = [
                       }
                     });
               } else {
-                // return const HomeScreen();
-                return const SignInScreen();
+                return const HomeScreen();
+                // return const SignInScreen();
               }
             } else {
               return const Material(
@@ -104,6 +105,10 @@ final appRoutes = [
   GetPage(
     name: '/home-screen',
     page: () => const HomeScreen(),
+  ),
+  GetPage(
+    name: '/help-screen',
+    page: () => const HelpScreen(),
   ),
   GetPage(
     name: '/terms-and-privacy-screen',

@@ -89,6 +89,7 @@ class RegistrationRepository {
           'firstName': firstName,
           'lastName': lastName,
           'profileImage': profilePicUrl,
+          'phoneNumber': _ref.read(authProvider).currentUser!.phoneNumber!,
         },
       );
 

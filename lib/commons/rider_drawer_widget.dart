@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/route_manager.dart';
+import 'package:shift_lift/features/auth/controller/auth_controller.dart';
 import 'package:top_modal_sheet/top_modal_sheet.dart';
 import '../features/home/components/drawer_item_button.dart';
 import '../utils/app_colors.dart';
@@ -8,7 +9,7 @@ import '../utils/app_colors.dart';
 class CustomerDrawerWidget extends ConsumerWidget {
   const CustomerDrawerWidget({super.key});
 
-  void openDrawer(BuildContext context) async {
+  void openDrawer(BuildContext context, WidgetRef ref) async {
     await showTopModalSheet<String?>(
       context,
       Container(
@@ -27,7 +28,6 @@ class CustomerDrawerWidget extends ConsumerWidget {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    // navigateTo(context, "/driver-ongoing-ride-screen");
                     Get.toNamed("/driver-ongoing-ride-screen");
                   },
                   icon: const Icon(
@@ -40,8 +40,7 @@ class CustomerDrawerWidget extends ConsumerWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
-                    // navigateTo(context, "/driver-profile-screen");
-                    Get.toNamed("/driver-profile-screen");
+                    Get.toNamed("/customer-profile-screen");
                   },
                   child: CircleAvatar(
                     backgroundColor: Colors.grey[300],
@@ -88,7 +87,18 @@ class CustomerDrawerWidget extends ConsumerWidget {
                 DrawerItemButton(
                   icon: Icons.help,
                   label: "Help",
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Get.toNamed("/help-screen");
+                  },
+                ),
+                DrawerItemButton(
+                  icon: Icons.logout,
+                  label: "Logout",
+                  onPressed: () {
+                    ref.read(authControllerProvider.notifier).signOut(context);
+                    Get.toNamed("/sign-in-screen");
+                  },
                 ),
               ],
             ),
@@ -107,7 +117,7 @@ class CustomerDrawerWidget extends ConsumerWidget {
         style: const ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(Colors.black87),
         ),
-        onPressed: () async => openDrawer(context),
+        onPressed: () async => openDrawer(context, ref),
         icon: const Icon(
           Icons.menu,
           color: Colors.white,

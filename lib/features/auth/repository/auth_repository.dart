@@ -130,4 +130,14 @@ class AuthRepository {
       return left(Failure(e.toString()));
     }
   }
+
+  FutureVoid signOut() async {
+    try {
+      return right(await _auth.signOut());
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
 }

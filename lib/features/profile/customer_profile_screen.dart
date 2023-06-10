@@ -40,8 +40,10 @@ class _CustomerProfileScreenState extends ConsumerState<CustomerProfileScreen> {
             children: [
               CircleAvatar(
                 radius: 50,
-                backgroundImage: NetworkImage(user.photoUrl ??
-                    'https://www.w3schools.com/w3images/avatar2.png'),
+                backgroundImage: NetworkImage(
+                  user.photoUrl ??
+                      'https://www.w3schools.com/w3images/avatar2.png',
+                ),
               ),
               const SizedBox(height: 16),
               TextFormField(

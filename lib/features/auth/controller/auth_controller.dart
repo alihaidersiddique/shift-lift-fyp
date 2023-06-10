@@ -222,4 +222,26 @@ class AuthController extends StateNotifier<UserModel> {
       debugPrint(e.toString());
     }
   }
+
+  // sign out
+  Future<void> signOut(BuildContext context) async {
+    try {
+      showCircularProgressIndicator(context);
+
+      final res = await _authRepository.signOut();
+
+      res.fold(
+        (l) {
+          Navigator.pop(context);
+          showSnackBar(context, l.message);
+        },
+        (r) {
+          Navigator.pop(context);
+          Get.offAllNamed("/sign-in-screen");
+        },
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 }

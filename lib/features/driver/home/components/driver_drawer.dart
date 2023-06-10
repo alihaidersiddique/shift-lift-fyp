@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/route_manager.dart';
-import 'package:shift_lift/core/utils.dart';
 import 'package:top_modal_sheet/top_modal_sheet.dart';
 
 import '../../../../utils/app_colors.dart';
+import '../../../auth/controller/auth_controller.dart';
 import '../../../home/components/drawer_item_button.dart';
 
-class DriverDrawerWidget extends StatelessWidget {
+class DriverDrawerWidget extends ConsumerWidget {
   const DriverDrawerWidget({
     super.key,
   });
 
-  void openDrawer(BuildContext context) async {
+  void openDrawer(BuildContext context, WidgetRef ref) async {
     await showTopModalSheet<String?>(
       context,
       Container(
@@ -30,7 +31,6 @@ class DriverDrawerWidget extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    // navigateTo(context, "/driver-ongoing-ride-screen");
                     Get.toNamed("/driver-ongoing-ride-screen");
                   },
                   icon: const Icon(
@@ -43,7 +43,6 @@ class DriverDrawerWidget extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
-                    // navigateTo(context, "/driver-profile-screen");
                     Get.toNamed("/driver-profile-screen");
                   },
                   child: CircleAvatar(
@@ -97,11 +96,10 @@ class DriverDrawerWidget extends StatelessWidget {
                   },
                 ),
                 DrawerItemButton(
-                  icon: Icons.change_circle,
-                  label: "Withdrawals",
+                  icon: Icons.logout,
+                  label: "Logout",
                   onPressed: () {
-                    Navigator.pop(context);
-                    Get.toNamed("/driver-withdrawals-screen");
+                    ref.read(authControllerProvider.notifier).signOut(context);
                   },
                 ),
               ],
@@ -114,14 +112,14 @@ class DriverDrawerWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.only(right: 15.0),
       child: IconButton(
         style: const ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(Colors.black87),
         ),
-        onPressed: () async => openDrawer(context),
+        onPressed: () async => openDrawer(context, ref),
         icon: const Icon(
           Icons.menu,
           color: Colors.white,

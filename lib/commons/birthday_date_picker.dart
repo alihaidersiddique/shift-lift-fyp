@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 class BirthdayDatePicker extends StatefulWidget {
   final Function(DateTime) onDateSelected;
 
-  const BirthdayDatePicker({super.key, required this.onDateSelected});
+  const BirthdayDatePicker({Key? key, required this.onDateSelected})
+      : super(key: key);
 
   @override
   _BirthdayDatePickerState createState() => _BirthdayDatePickerState();
@@ -27,10 +28,36 @@ class _BirthdayDatePickerState extends State<BirthdayDatePicker> {
       lastDate: DateTime.now(),
     );
     if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-      widget.onDateSelected(_selectedDate);
+      final now = DateTime.now();
+      final age = now.year -
+          picked.year -
+          ((now.month > picked.month ||
+                  (now.month == picked.month && now.day >= picked.day))
+              ? 0
+              : 1);
+      if (age < 18) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Invalid Date'),
+              content:
+                  Text('You must be at least 18 years old to use this app.'),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        setState(() {
+          _selectedDate = picked;
+        });
+        widget.onDateSelected(_selectedDate);
+      }
     }
   }
 

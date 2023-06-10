@@ -20,6 +20,7 @@ class RegistrationInProcessScreen extends StatelessWidget {
         ],
       ),
       body: Container(
+        alignment: Alignment.center,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -2,10 +2,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shift_lift/features/profile/profile_pic_widget.dart';
 
 import '../../../../commons/birthday_date_picker.dart';
 import '../../../../commons/gender_selection_widget.dart';
-import '../../../../utils/app_colors.dart';
 
 import 'dart:io';
 
@@ -68,38 +68,12 @@ class _EditCustomerProfileScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => _showPicker(context, ref),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppColors.primaryColor,
-                            width: 2,
-                          ),
-                        ),
-                        child: CircleAvatar(
-                          radius: 60,
-                          backgroundImage: NetworkImage(
-                            user.photoUrl ??
-                                'https://www.w3schools.com/w3images/avatar2.png',
-                          ),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () async {
-                        _showPicker(context, ref);
-                      },
-                      icon: const Icon(
-                        Icons.photo_camera_rounded,
-                        color: AppColors.primaryColor,
-                      ),
-                    )
-                  ],
+                CircleAvatarWithAddPhotoButton(
+                  radius: 64.0,
+                  onImageSelected: (file) async {
+                    // Do something with the selected image file
+                    await uploadImage(file);
+                  },
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
@@ -157,112 +131,18 @@ class _EditCustomerProfileScreenState
     );
   }
 
-  // Function to open the dialog box
-  void _showPicker(context, WidgetRef ref) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SafeArea(
-            child: Wrap(
-              children: <Widget>[
-                ListTile(
-                  leading: const Icon(Icons.photo_library),
-                  title: const Text('Photo Library'),
-                  onTap: () {
-                    String image = _getImageFromGallery(ref, context);
-                    Navigator.of(context).pop();
-                    ref
-                        .read(authControllerProvider.notifier)
-                        .updateProfileImage(
-                          image,
-                          context,
-                        );
-
-                    setState(() {});
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.photo_camera),
-                  title: const Text('Camera'),
-                  onTap: () {
-                    String image = _getImageFromCamera(ref, context);
-                    Navigator.of(context).pop();
-                    ref
-                        .read(authControllerProvider.notifier)
-                        .updateProfileImage(
-                          image,
-                          context,
-                        );
-
-                    setState(() {});
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.delete),
-                  title: const Text('Remove Picture'),
-                  onTap: () {
-                    ref
-                        .read(selectedImageProvider.notifier)
-                        .update((state) => null);
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
-          );
-        });
-  }
-
-  final picker = ImagePicker();
-
-  String imageUrl = "";
-
   // Function to upload image to Firebase Storage
-  Future<String> uploadImage(File imageFile) async {
+  uploadImage(File imageFile) async {
     String fileName = Path.basename(imageFile.path);
     FirebaseStorage storage = FirebaseStorage.instance;
     Reference reference = storage.ref().child('images/$fileName');
     UploadTask uploadTask = reference.putFile(imageFile);
     TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
     String url = await taskSnapshot.ref.getDownloadURL();
-    return url;
-  }
 
-  // // Function to get image from gallery
-  _getImageFromGallery(WidgetRef ref, BuildContext context) async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      ref
-          .read(selectedImageProvider.notifier)
-          .update((state) => File(pickedFile.path));
-
-      final image = ref.read(selectedImageProvider);
-
-      imageUrl = await uploadImage(image!);
-
-      return imageUrl;
-    } else {
-      debugPrint('No image selected.');
-    }
-  }
-
-  // Function to get image from camera
-  _getImageFromCamera(WidgetRef ref, BuildContext context) async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
-    if (pickedFile != null) {
-      ref
-          .read(selectedImageProvider.notifier)
-          .update((state) => File(pickedFile.path));
-
-      final image = ref.read(selectedImageProvider);
-
-      imageUrl = await uploadImage(image!);
-
-      return imageUrl;
-    } else {
-      debugPrint('No image selected.');
-    }
+    ref.read(authControllerProvider.notifier).updateProfileImage(
+          url,
+          context,
+        );
   }
 }
