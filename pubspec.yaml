@@ -24,9 +24,10 @@ dependencies:
   pinput: ^2.2.31
   shared_preferences: ^2.0.18
   flutter_svg: ^2.0.4
-  http: ^0.13.5
   top_modal_sheet: ^2.0.1
   carousel_slider: ^4.2.1
+  stripe_checkout: ^1.0.0
+  http: ^0.13.5
 
   # for google maps and places
   geolocator: ^9.0.2
@@ -38,6 +39,7 @@ dependencies:
   flutter_polyline_points: ^1.0.0
   square_progress_bar: ^1.1.1
   get: ^4.6.5
+  flutter_lorem: ^2.0.0
 
 dev_dependencies:
   flutter_test:

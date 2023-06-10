@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shift_lift/utils/utils.dart';
 
-import '../../commons/app_drawer.dart';
+import '../../commons/rider_drawer_widget.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -12,7 +12,7 @@ class ChatScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 2.0,
         actions: const [
-          AppDrawer(),
+          CustomerDrawerWidget(),
         ],
         title: Row(
           children: [

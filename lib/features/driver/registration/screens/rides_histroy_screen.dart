@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../commons/app_drawer.dart';
+import '../../../../commons/rider_drawer_widget.dart';
 import '../../../../utils/app_colors.dart';
 import 'fare_details_screen.dart';
 
@@ -15,7 +15,7 @@ class RidesHistroyScreen extends StatelessWidget {
         elevation: 2.0,
         title: const Text("Rides Histroy"),
         actions: const [
-          AppDrawer(),
+          CustomerDrawerWidget(),
         ],
       ),
       body: ListView.builder(

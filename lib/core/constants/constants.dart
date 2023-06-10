@@ -2,8 +2,10 @@ class AppText {
   static const defaultPic =
       'https://external-preview.redd.it/5kh5OreeLd85QsqYO1Xz_4XSLYwZntfjqou-8fyBFoE.png?auto=webp&s=dbdabd04c399ce9c761ff899f5d38656d1de87c2';
 
+  // static const kGoogleMapsApiKey = "AIzaSyAND6dxikJFQicSXWOBWHIAUd_VvPMIOS4";
   static const kGoogleMapsApiKey = "AIzaSyAND6dxikJFQicSXWOBWHIAUd_VvPMIOS4";
-  static const kGooglePlacesApiKey = "AIzaSyCQz4nQEOeSQOri63o1ddItXJpM4UukwsA";
+  // static const kGooglePlacesApiKey = "AIzaSyCQz4nQEOeSQOri63o1ddItXJpM4UukwsA";
+  static const kGooglePlacesApiKey = "AIzaSyBk59KIkBx1hG4vKS0Mmx3nRw15aRBzA_E";
 
   static const String shiftLift = 'Shift Lift';
   static const String helloNiceToMeetYou = 'Hello, nice to meet you!';

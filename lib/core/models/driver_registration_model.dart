@@ -8,6 +8,8 @@ class DriverRegistrationModel {
   final String? phoneNumber;
   final String? firstName;
   final String? lastName;
+  final String? status;
+
   final XFile? profileImage;
   final XFile? idImage;
   final XFile? cnicFrontImage;
@@ -23,6 +25,7 @@ class DriverRegistrationModel {
     this.phoneNumber,
     this.firstName,
     this.lastName,
+    this.status,
     this.profileImage,
     this.idImage,
     this.cnicFrontImage,
@@ -40,6 +43,7 @@ class DriverRegistrationModel {
     String? firstName,
     String? lastName,
     XFile? profileImage,
+    String? status,
     XFile? idImage,
     XFile? cnicFrontImage,
     XFile? cnicBackImage,
@@ -55,6 +59,7 @@ class DriverRegistrationModel {
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       profileImage: profileImage ?? this.profileImage,
+      status: status ?? this.status,
       idImage: idImage ?? this.idImage,
       cnicFrontImage: cnicFrontImage ?? this.cnicFrontImage,
       cnicBackImage: cnicBackImage ?? this.cnicBackImage,
@@ -74,6 +79,7 @@ class DriverRegistrationModel {
       'firstName': firstName,
       'lastName': lastName,
       'profileImage': profileImage,
+      'status': status,
       'idImage': idImage,
       'cnicFrontImage': cnicFrontImage,
       'cnicBackImage': cnicBackImage,
@@ -92,6 +98,7 @@ class DriverRegistrationModel {
       firstName: map['firstName'] ?? "",
       lastName: map['lastName'] ?? "",
       profileImage: map['profileImage'] ?? "",
+      status: map['status'] ?? "",
       idImage: map['idImage'] ?? "",
       cnicFrontImage: map['cnicFrontImage'] ?? "",
       cnicBackImage: map['cnicBackImage'] ?? "",
@@ -111,6 +118,6 @@ class DriverRegistrationModel {
 
   @override
   String toString() {
-    return 'DriverRegistrationModel(uid: $uid, phoneNumber: $phoneNumber, firstName: $firstName, lastName: $lastName, profileImage: $profileImage, idImage: $idImage, cnicFrontImage: $cnicFrontImage, cnicBackImage: $cnicBackImage, licenseFrontImage: $licenseFrontImage, licenseBackImage: $licenseBackImage, vehicleRegCertFrontImage: $vehicleRegCertFrontImage), vehicleImage: $vehicleImage, vehicleType: $vehicleType)';
+    return 'DriverRegistrationModel(uid: $uid, phoneNumber: $phoneNumber, firstName: $firstName, lastName: $lastName, profileImage: $profileImage, idImage: $idImage, status: $status, cnicFrontImage: $cnicFrontImage, cnicBackImage: $cnicBackImage, licenseFrontImage: $licenseFrontImage, licenseBackImage: $licenseBackImage, vehicleRegCertFrontImage: $vehicleRegCertFrontImage), vehicleImage: $vehicleImage, vehicleType: $vehicleType)';
   }
 }

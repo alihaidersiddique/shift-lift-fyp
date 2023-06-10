@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shift_lift/features/driver/home/components/driver_drawer.dart';
 
-import '../../../../commons/app_drawer.dart';
+import '../../../../commons/rider_drawer_widget.dart';
 
 class DriverWithdrawalsScreen extends StatelessWidget {
   DriverWithdrawalsScreen({super.key});

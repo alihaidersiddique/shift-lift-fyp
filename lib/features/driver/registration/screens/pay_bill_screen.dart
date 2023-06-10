@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../commons/app_drawer.dart';
+import '../../../../commons/rider_drawer_widget.dart';
 import '../../../../utils/app_colors.dart';
 
 class PayBillScreen extends ConsumerStatefulWidget {
@@ -21,7 +21,7 @@ class _PayBillScreenState extends ConsumerState<PayBillScreen> {
       appBar: AppBar(
         title: const Text("Pay Bill"),
         actions: const [
-          AppDrawer(),
+          CustomerDrawerWidget(),
         ],
       ),
       body: Container(

@@ -26,25 +26,28 @@ class _AvailableDriversScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const FaIcon(
-            FontAwesomeIcons.arrowLeft,
-            color: Colors.black,
-            size: 20,
-          ),
-        ),
-        title: const Text(
-          "Finding drivers...",
-          style: TextStyle(fontSize: 23.0),
-        ),
-        centerTitle: true,
-        titleSpacing: 2,
-        backgroundColor: Colors.white,
+        // leading: IconButton(
+        //   onPressed: () => Navigator.pop(context),
+        //   icon: const FaIcon(
+        //     FontAwesomeIcons.arrowLeft,
+        //     color: Colors.black,
+        //     size: 20,
+        //   ),
+        // ),
+        // title: const Text(
+        //   "Available Drivers",
+        //   style: TextStyle(fontSize: 23.0),
+        // ),
+        // titleSpacing: 2,
+        // backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
         elevation: 2,
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              // ref.read(rideControllerProvider.notifier).cancelRide();
+              Navigator.pop(context);
+            },
             child: Text(
               "Cancel",
               style: GoogleFonts.poppins(

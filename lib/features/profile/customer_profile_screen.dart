@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/route_manager.dart';
 
-import '../../../auth/controller/auth_controller.dart';
+import '../auth/controller/auth_controller.dart';
 
-class DriverProfileScreen extends ConsumerStatefulWidget {
-  const DriverProfileScreen({super.key});
+class CustomerProfileScreen extends ConsumerStatefulWidget {
+  const CustomerProfileScreen({super.key});
 
   @override
-  _DriverProfileScreenState createState() => _DriverProfileScreenState();
+  _CustomerProfileScreenState createState() => _CustomerProfileScreenState();
 }
 
-class _DriverProfileScreenState extends ConsumerState<DriverProfileScreen> {
+class _CustomerProfileScreenState extends ConsumerState<CustomerProfileScreen> {
   late TextEditingController _nameController;
   late TextEditingController _phoneNumberController;
   late TextEditingController _addressController;
@@ -91,7 +91,7 @@ class _DriverProfileScreenState extends ConsumerState<DriverProfileScreen> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  Get.toNamed('/edit-driver-profile-screen');
+                  Get.toNamed('/edit-customer-profile-screen');
                 },
                 child: const Text('Edit Profile'),
               ),

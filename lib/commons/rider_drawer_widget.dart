@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/route_manager.dart';
-import 'package:shift_lift/core/utils.dart';
 import 'package:top_modal_sheet/top_modal_sheet.dart';
+import '../features/home/components/drawer_item_button.dart';
+import '../utils/app_colors.dart';
 
-import '../../../../utils/app_colors.dart';
-import '../../../home/components/drawer_item_button.dart';
-
-class DriverDrawerWidget extends StatelessWidget {
-  const DriverDrawerWidget({
-    super.key,
-  });
+class CustomerDrawerWidget extends ConsumerWidget {
+  const CustomerDrawerWidget({super.key});
 
   void openDrawer(BuildContext context) async {
     await showTopModalSheet<String?>(
@@ -77,7 +74,7 @@ class DriverDrawerWidget extends StatelessWidget {
                   label: "Home",
                   onPressed: () {
                     Navigator.pop(context);
-                    Get.toNamed("/driver-home-screen");
+                    Get.toNamed("/home-screen");
                   },
                 ),
                 DrawerItemButton(
@@ -90,19 +87,8 @@ class DriverDrawerWidget extends StatelessWidget {
                 ),
                 DrawerItemButton(
                   icon: Icons.help,
-                  label: "Earnings",
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Get.toNamed("/driver-earnings-screen");
-                  },
-                ),
-                DrawerItemButton(
-                  icon: Icons.change_circle,
-                  label: "Withdrawals",
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Get.toNamed("/driver-withdrawals-screen");
-                  },
+                  label: "Help",
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -114,7 +100,7 @@ class DriverDrawerWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.only(right: 15.0),
       child: IconButton(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shift_lift/commons/app_drawer.dart';
+import 'package:shift_lift/commons/rider_drawer_widget.dart';
 import 'package:shift_lift/features/driver/registration/controllers/registration_controller.dart';
 import 'package:shift_lift/features/driver/registration/widgets/form_step_widget.dart';
 

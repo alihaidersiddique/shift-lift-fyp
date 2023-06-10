@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shift_lift/commons/app_drawer.dart';
+import 'package:shift_lift/commons/rider_drawer_widget.dart';
 
 import '../../../../utils/app_colors.dart';
 
@@ -15,7 +15,7 @@ class FareDetailsScreen extends StatelessWidget {
         elevation: 2.0,
         title: const Text("Fare Details"),
         actions: const [
-          AppDrawer(),
+          CustomerDrawerWidget(),
         ],
       ),
       body: Column(

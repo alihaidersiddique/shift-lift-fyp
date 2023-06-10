@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shift_lift/features/driver/registration/screens/pay_bill_screen.dart';
 
-import '../../../../commons/app_drawer.dart';
+import '../../../../commons/rider_drawer_widget.dart';
 import '../../../../utils/app_colors.dart';
 
 class RideBillScreen extends ConsumerWidget {
@@ -15,7 +15,7 @@ class RideBillScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text("Ride Bill"),
         actions: const [
-          AppDrawer(),
+          CustomerDrawerWidget(),
         ],
       ),
       body: Column(

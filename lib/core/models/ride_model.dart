@@ -8,6 +8,7 @@ enum RideStatus {
   error,
   cancelling,
   cancelled,
+  onGoing,
   completing,
   completed,
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../commons/app_drawer.dart';
+import '../../../../commons/rider_drawer_widget.dart';
 
 class DriverEarningsFailureWithdrawScreen extends StatelessWidget {
   const DriverEarningsFailureWithdrawScreen({super.key});
@@ -12,7 +12,7 @@ class DriverEarningsFailureWithdrawScreen extends StatelessWidget {
         title: const Text('Withdrawal Failed'),
         elevation: 2.0,
         actions: const [
-          AppDrawer(),
+          CustomerDrawerWidget(),
         ],
       ),
       body: Center(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shift_lift/commons/app_drawer.dart';
+import 'package:shift_lift/commons/rider_drawer_widget.dart';
 
 import 'package:shift_lift/utils/app_colors.dart';
 import 'package:shift_lift/utils/app_dimensions.dart';
@@ -53,7 +53,7 @@ class _HelpScreenState extends State<HelpScreen> {
       appBar: AppBar(
         title: const Text("Help"),
         actions: const [
-          AppDrawer(),
+          CustomerDrawerWidget(),
         ],
       ),
       body: Column(

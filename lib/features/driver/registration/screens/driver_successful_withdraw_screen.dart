@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../commons/app_drawer.dart';
+import '../../../../commons/rider_drawer_widget.dart';
 
 class DriverSuccessfulWithdrawScreen extends StatelessWidget {
   const DriverSuccessfulWithdrawScreen({super.key});
@@ -12,7 +12,7 @@ class DriverSuccessfulWithdrawScreen extends StatelessWidget {
         title: const Text('Withdrawal Successful'),
         elevation: 2.0,
         actions: const [
-          AppDrawer(),
+          CustomerDrawerWidget(),
         ],
       ),
       body: Center(

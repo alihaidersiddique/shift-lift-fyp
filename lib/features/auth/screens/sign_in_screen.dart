@@ -129,28 +129,31 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             ),
           ),
           const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                style: GoogleFonts.poppins(color: Colors.black, fontSize: 12),
-                children: [
-                  const TextSpan(
-                    text: "${AppText.byCreating} ",
-                  ),
-                  TextSpan(
-                    text: "${AppText.termsOfService} ",
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-                  ),
-                  const TextSpan(
-                    text: "and ",
-                  ),
-                  TextSpan(
-                    text: "${AppText.privacyPolicy} ",
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-                  ),
-                ],
+          GestureDetector(
+            onTap: () => Get.toNamed("/terms-and-privacy-screen"),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: GoogleFonts.poppins(color: Colors.black, fontSize: 12),
+                  children: [
+                    const TextSpan(
+                      text: "${AppText.byCreating} ",
+                    ),
+                    TextSpan(
+                      text: "${AppText.termsOfService} ",
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                    ),
+                    const TextSpan(
+                      text: "and ",
+                    ),
+                    TextSpan(
+                      text: "${AppText.privacyPolicy} ",
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

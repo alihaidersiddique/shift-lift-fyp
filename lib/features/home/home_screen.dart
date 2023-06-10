@@ -15,12 +15,11 @@ import 'package:shift_lift/core/constants/constants.dart';
 import 'package:shift_lift/core/utils.dart';
 import 'package:shift_lift/features/home/components/vehicle_tile_widget.dart';
 
-import '../../commons/app_drawer.dart';
+import '../../commons/rider_drawer_widget.dart';
 import '../../utils/utils.dart';
 import '../auth/controller/auth_controller.dart';
 import '../map/controller/map_controller.dart';
 import '../ride/controllers/ride_controller.dart';
-import 'components/rider_drawer.dart';
 
 final selectedTileProvider = StateProvider<int>((ref) => -1);
 
@@ -102,7 +101,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ),
         actions: const [
-          AppDrawer(),
+          CustomerDrawerWidget(),
         ],
       ),
       body: Column(
@@ -182,10 +181,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 vehcileName: snapshot.data!.docs[index]['vehicleName'],
                 vehcileCapacity: snapshot.data!.docs[index]['vehicleCapacity'],
                 vehicleImage: snapshot.data!.docs[index]['vehicleImage'],
-                suggestions:
-                    (snapshot.data!.docs[index]['suggestions'] as List<dynamic>)
-                        .map((item) => item.toString())
-                        .toList(),
               ),
             );
           } else {

@@ -90,10 +90,6 @@ class _DriverVehicleSelectionScreenState
                 vehcileName: snapshot.data!.docs[index]['vehicleName'],
                 vehcileCapacity: snapshot.data!.docs[index]['vehicleCapacity'],
                 vehicleImage: snapshot.data!.docs[index]['vehicleImage'],
-                suggestions:
-                    (snapshot.data!.docs[index]['suggestions'] as List<dynamic>)
-                        .map((item) => item.toString())
-                        .toList(),
               ),
             );
           } else {

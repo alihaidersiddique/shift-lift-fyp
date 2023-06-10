@@ -82,7 +82,8 @@ class AuthRepository {
   FutureVoid updateProfileImage(String? phoneNumber, String photoUrl) async {
     try {
       return right(
-          await _users.doc(phoneNumber).update({'photoUrl': photoUrl}));
+        await _users.doc(phoneNumber).update({'photoUrl': photoUrl}),
+      );
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {

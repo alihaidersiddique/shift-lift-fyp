@@ -11,7 +11,6 @@ class VehicleTileWidget extends ConsumerWidget {
     required this.vehcileName,
     required this.vehcileCapacity,
     required this.vehicleImage,
-    required this.suggestions,
     required this.onTap,
     required this.index,
   });
@@ -19,7 +18,6 @@ class VehicleTileWidget extends ConsumerWidget {
   final String vehcileName;
   final String vehcileCapacity;
   final String vehicleImage;
-  final List<String> suggestions;
   final VoidCallback onTap;
   final int index;
 
@@ -100,25 +98,11 @@ class VehicleTileWidget extends ConsumerWidget {
                   ],
                 ),
                 const Spacer(),
-
-                // box image
-                // Center(child: Image.asset("assets/images/EmptyBox.png")),
               ],
             ),
 
             // const Divider(),
             const SizedBox(height: 5.0),
-
-            // suggestions box
-            // SizedBox(
-            //   height: 40.0,
-            //   child: ListView.builder(
-            //     scrollDirection: Axis.horizontal,
-            //     itemCount: suggestions.length,
-            //     itemBuilder: (context, index) =>
-            //         SuggestItemWidget(text: suggestions[index]),
-            //   ),
-            // )
           ],
         ),
       ),
