@@ -67,7 +67,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               vertical: 5.0,
             ),
             child: Text(
-              AppText.helloNiceToMeetYou,
+              AppText.hello,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 15.0,
@@ -77,7 +77,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              AppText.createAccount,
+              AppText.signInAndsignUp,
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 25.0,

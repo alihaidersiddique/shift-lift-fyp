@@ -8,7 +8,7 @@ class AppText {
   static const kGooglePlacesApiKey = "AIzaSyBk59KIkBx1hG4vKS0Mmx3nRw15aRBzA_E";
 
   static const String shiftLift = 'Shift Lift';
-  static const String helloNiceToMeetYou = 'Hello, nice to meet you!';
+  static const String hello = 'Hello,';
   static const String whoAreYou = 'Who are you!';
   static const String selectMode = 'Select mode!';
   static const String tellYourGoodName = "What's your name?";
@@ -16,7 +16,7 @@ class AppText {
   static const String userName = 'Muhammad Ali';
   // static const String getShiftingWithShiftLift = 'Ease shift by ShiftLift';
   static const String enterMobileNumber = 'Enter mobile number';
-  static const String createAccount = 'Create Account';
+  static const String signInAndsignUp = 'Sign-In or Create Account';
   static const String fullName = 'Full Name';
   static const String byCreating = 'By creating an account, you agree to our';
   static const String termsOfService = 'Terms of Service';

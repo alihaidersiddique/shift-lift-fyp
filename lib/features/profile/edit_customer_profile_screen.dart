@@ -105,6 +105,26 @@ class _EditCustomerProfileScreenState
                   ),
                 ),
                 const SizedBox(height: 16),
+                TextFormField(
+                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.go,
+                  controller: _addressController,
+                  onFieldSubmitted: (newValue) => ref
+                      .watch(authControllerProvider.notifier)
+                      .updateAddress(newValue, context),
+                  enabled: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Address',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter address';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
                 BirthdayDatePicker(
                   onDateSelected: (value) {
                     ref.read(authControllerProvider.notifier).updateDateOfBirth(
